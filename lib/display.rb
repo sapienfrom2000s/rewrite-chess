@@ -9,7 +9,6 @@ class Display
         @board = board
         @squares = {}
         make_squares
-        mount_pieces
     end
 
     def render_board
@@ -27,20 +26,30 @@ class Display
 
     def decolorize_hints
         board.squares_to_highlight.each do |coordinate|
-            @squares[coordinate] = fill_background('  ',background_color(coordinate))
+            @squares[coordinate] = fill_background(squares[coordinate],background_color(coordinate))
         end
     end
 
     def colorize_hints
         board.squares_to_highlight.each do |coordinate|
-            @squares[coordinate] = fill_background('  ',:magenta)
+            @squares[coordinate] = fill_background(squares[coordinate],:magenta)
         end
     end
 
     def transport_piece
         piece = board.grid[board.selected_square]
-        @squares[board.cursor] = piece.image.colorize(piece.color).colorize(:background=>background_color(board.cursor))
-        @squares[board.selected_square] = fill_background('  ', background_color(board.selected_square))
+        current_cursor = board.cursor
+        selected_square = board.selected_square
+        @squares[current_cursor] = piece.image.colorize(piece.color).colorize(:background=>background_color(current_cursor))
+        @squares[selected_square] = fill_background('  ', background_color(selected_square))
+    end
+
+    def mount_pieces
+        board.grid.each do |coordinate, value|
+            unless value.nil? 
+                squares[coordinate] = value.image.colorize(value.color).colorize(:background=>background_color(coordinate))  
+            end
+        end
     end
 
     private
@@ -76,11 +85,4 @@ class Display
         end
     end
 
-    def mount_pieces
-        board.grid.each do |coordinate, value|
-            unless value.nil? 
-                squares[coordinate] = value.image.colorize(value.color).colorize(:background=>background_color(coordinate))  
-            end
-        end
-    end
 end
