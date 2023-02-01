@@ -23,12 +23,14 @@ class Human
             current_piece = board.grid[board.cursor]
             if( current_piece != nil && current_piece.color == board.turn )
                 board.display.decolorize_hints
+                board.select_square
                 board.fill_hints
                 board.display.colorize_hints
             else
                 board.transport_piece
-                board.reset_hints
                 board.display.decolorize_hints
+                board.reset_hints
+                board.deselect_square
             end
         when 'q'
         exit

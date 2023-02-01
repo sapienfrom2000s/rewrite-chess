@@ -5,7 +5,7 @@
 class Board
   NO_OF_SQUARES = 64
   attr_accessor :grid
-  attr_reader :cursor, :previous_cursor, :squares_to_highlight, :display, :turn, :display, :coordinates_finder
+  attr_reader :cursor, :previous_cursor, :squares_to_highlight, :display, :turn, :display, :coordinates_finder, :selected_square
 
   def initialize
     @grid = {}
@@ -40,14 +40,23 @@ class Board
 
   def transport_piece
     if squares_to_highlight.include?(cursor)
-      @grid[cursor] = grid[previous_cursor]
+      @grid[cursor] = grid[selected_square]
       display.transport_piece
-      @grid[previous_cursor] = nil
+      remove_self_from_hints
+      @grid[selected_square] = nil
     end
   end
 
   def reset_hints
     @squares_to_highlight = []
+  end
+
+  def select_square
+    @selected_square = cursor
+  end
+
+  def deselect_square
+    @selected_square = nil
   end
 
   private
@@ -56,5 +65,9 @@ class Board
     files_and_ranks = *(1..8)
     coordinates = files_and_ranks.repeated_permutation(2).to_a
     @grid = coordinates.to_h { |coord| [coord, nil] }
+  end
+
+  def remove_self_from_hints
+    @squares_to_highlight -= [cursor]
   end
 end

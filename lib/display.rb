@@ -38,8 +38,9 @@ class Display
     end
 
     def transport_piece
-        @squares[board.cursor] = squares[board.previous_cursor]
-        @squares[board.previous_cursor] = nil
+        piece = board.grid[board.selected_square]
+        @squares[board.cursor] = piece.image.colorize(piece.color).colorize(:background=>background_color(board.cursor))
+        @squares[board.selected_square] = fill_background('  ', background_color(board.selected_square))
     end
 
     private
