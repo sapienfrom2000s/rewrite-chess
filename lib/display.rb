@@ -14,7 +14,7 @@ class Display
 
     def render_board
         restore_background
-        emphasize_background
+        emphasize_cursor
         8.downto(1).each do |rank|
             1.upto(8).each do |file|
                 print squares[[file,rank]]
@@ -23,6 +23,23 @@ class Display
         end
         print "\n\n\n\n"
         board.save_cursor
+    end
+
+    def decolorize_hints
+        board.squares_to_highlight.each do |coordinate|
+            @squares[coordinate] = fill_background('  ',background_color(coordinate))
+        end
+    end
+
+    def colorize_hints
+        board.squares_to_highlight.each do |coordinate|
+            @squares[coordinate] = fill_background('  ',:magenta)
+        end
+    end
+
+    def transport_piece
+        @squares[board.cursor] = squares[board.previous_cursor]
+        @squares[board.previous_cursor] = nil
     end
 
     private
@@ -35,12 +52,15 @@ class Display
 
     def restore_background
         previous_cursor = board.previous_cursor
-        @squares[previous_cursor] = fill_background(squares[previous_cursor],background_color(previous_cursor))
+        @squares[previous_cursor] = fill_background(squares[previous_cursor],\
+         background_color(previous_cursor))
+        @squares[previous_cursor] = fill_background(squares[previous_cursor],\
+         :magenta) if board.squares_to_highlight.include?(previous_cursor)
     end
 
-    def emphasize_background
+    def emphasize_cursor
         cursor = board.cursor
-        squares[cursor] = squares[cursor].colorize(:background=>:red)
+        @squares[cursor] = fill_background(squares[cursor], :red)
     end
 
     def fill_background(container,color)

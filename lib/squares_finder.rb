@@ -1,4 +1,4 @@
-class coordinates_Finder
+class Coordinates_Finder
   MIN_MULTIPLIER = 1
   MAX_MULTIPLIER = 7
 
@@ -17,7 +17,7 @@ class coordinates_Finder
         current_piece = board.grid[coordinate]
         if current_piece.nil?
           coordinates.push(coordinate)
-        elsif current_piece.color == :white
+        elsif current_piece.color == board.turn
           break
         else
           coordinates.push(coordinate)
