@@ -5,6 +5,7 @@ require_relative 'setup'
 require_relative 'pieces/rook'
 require_relative 'pieces/bishop'
 require_relative 'pieces/queen'
+require_relative 'pieces/pawn'
 
 board = Board.new
 setup = Setup.new(board)
@@ -14,6 +15,8 @@ setup.deploy(Queen.new(:green),[[4,1]])
 setup.deploy(Rook.new(:blue),[[1,8],[8,8]])
 setup.deploy(Bishop.new(:blue),[[3,8],[6,8]])
 setup.deploy(Queen.new(:blue),[[4,8]])
+setup.deploy(Pawn.new(:green),[[1,2],[2,2],[3,2],[4,2],[5,2],[6,2],[7,2],[8,2]])
+setup.deploy(Pawn.new(:blue),[[1,7],[2,7],[3,7],[4,7],[5,7],[6,7],[7,7],[8,7]])
 board.display.mount_pieces
 human1 = Human.new(board)
 human2 = Human.new(board)
