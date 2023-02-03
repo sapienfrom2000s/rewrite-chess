@@ -15,6 +15,8 @@ class Coordinates_Finder
     when :P
       get_potential_coordinates_of_pawn_without_capture + 
       get_potential_pawn_captures
+    else
+      get_potential_coordinates_of_piece_wrt_range((1..1))
     end
   end
 

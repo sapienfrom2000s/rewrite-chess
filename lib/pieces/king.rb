@@ -1,11 +1,14 @@
+
 require_relative 'piece'
 
 class King < Piece
-  MOVEMENT = [[1,1],[1,0],[1,-1],[0,-1],[-1,-1],[-1,0],[-1,1],[0,1]]
-  attr_reader :piece_id
 
-  def initialize(color, board)
+  attr_reader :piece_id, :movement, :image
+
+  def initialize(color)
     super
     @piece_id = :K
+    @movement = [[1,1],[1,0],[1,-1],[0,-1],[-1,-1],[-1,0],[-1,1],[0,1]]
+    @image = '♚ '
   end
 end
