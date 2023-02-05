@@ -33,13 +33,14 @@ class Board
   def fill_hints
     return if grid[cursor].nil?
     @squares_to_highlight = coordinates_finder.potential_coordinates(cursor)
+    @squares_to_highlight = coordinates_finder.reject_coordinates_that_exposes_own_king
   end
 
   def transport_piece
     if squares_to_highlight.include?(cursor)
       @grid[cursor] = grid[selected_square]
       display.transport_piece
-      remove_self_from_hints
+      remove_cursor_from_hints
       @grid[selected_square] = nil
       switch_turn
     end
@@ -57,6 +58,10 @@ class Board
     @selected_square = nil
   end
 
+  def switch_turn
+    @turn = turn == :green ? :blue : :green
+  end
+
   private
 
   def make_grid
@@ -65,11 +70,7 @@ class Board
     @grid = coordinates.to_h { |coord| [coord, nil] }
   end
 
-  def remove_self_from_hints
+  def remove_cursor_from_hints
     @squares_to_highlight -= [cursor]
-  end
-
-  def switch_turn
-    @turn = turn == :green ? :blue : :green
   end
 end

@@ -1,6 +1,8 @@
+require 'pry-byebug'
+
 class Coordinates_Finder
 
-  attr_reader :board, :from
+  attr_reader :board, :from, :current_king_coordinate
 
   def initialize(board)
       @board = board
@@ -17,6 +19,15 @@ class Coordinates_Finder
       get_potential_pawn_captures
     else
       get_potential_coordinates_of_piece_wrt_range((1..1))
+    end
+  end
+
+  def reject_coordinates_that_exposes_own_king
+    @current_king_coordinate = get_current_king_coordinate
+    current_piece_id = board.grid[from].piece_id
+    board.squares_to_highlight.reject do |highlighted_square|
+      update_king_coordinate(highlighted_square) if current_piece_id == :K
+      current_king_exposed?(highlighted_square)
     end
   end
 
@@ -95,5 +106,49 @@ class Coordinates_Finder
 
   def forge_coordinate(relative_move)
     [from,relative_move].transpose.map(&:sum)
+  end
+
+#this method is expensive and can be substituted
+  def get_current_king_coordinate
+    current_turn = board.turn
+    board.grid.reject do |coordinate, value|
+      value.nil? || value.piece_id != :K || value.color != current_turn 
+    end.keys.flatten
+  end
+
+  #this method is expensive and can be substituted
+  def get_squares_occupied_by_current_turn
+    current_turn = board.turn
+    board.grid.reject do |coordinate, value|
+      value.nil? || value.color != current_turn
+    end.keys
+  end
+  
+  def current_king_exposed?(highlighted_square)
+    pseudo_move(highlighted_square)
+    board.switch_turn 
+    flag = get_squares_occupied_by_current_turn.any? do |coordinate|
+      potential_coordinates(coordinate).include?(current_king_coordinate)
+    end
+    board.switch_turn
+    undo_move(highlighted_square)
+    flag
+  end
+
+  def update_king_coordinate(highlighted_square)
+    @current_king_coordinate = highlighted_square
+  end
+
+  def pseudo_move(highlighted_square)
+    @piece_backup = board.grid[highlighted_square]
+    @from_backup = from
+    board.grid[highlighted_square] = board.grid[from]
+    board.grid[from] = nil
+  end
+
+  def undo_move(highlighted_square)
+    @from = @from_backup
+    board.grid[from] = board.grid[highlighted_square]
+    board.grid[highlighted_square] = @piece_backup 
   end
 end
