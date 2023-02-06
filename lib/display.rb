@@ -12,6 +12,7 @@ class Display
     end
 
     def render_board
+	system("clear")
         restore_background
         emphasize_cursor
         8.downto(1).each do |rank|
