@@ -1,0 +1,2 @@
+class Special_Moves
+end

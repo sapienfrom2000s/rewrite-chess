@@ -1,0 +1,15 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    colorize (0.8.1)
+    tty-cursor (0.7.1)
+
+PLATFORMS
+  x86_64-linux
+
+DEPENDENCIES
+  colorize
+  tty-cursor
+
+BUNDLED WITH
+   2.3.7

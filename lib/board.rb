@@ -5,7 +5,7 @@
 class Board
   NO_OF_SQUARES = 64
   attr_accessor :grid
-  attr_reader :cursor, :previous_cursor, :squares_to_highlight, :turn, :display, :coordinates_finder, :selected_square
+  attr_reader :cursor, :previous_cursor, :squares_to_highlight, :turn, :display, :coordinates_finder, :selected_square, :king_side_castling
 
   def initialize
     @grid = {}
@@ -15,6 +15,7 @@ class Board
     @squares_to_highlight = []
     @display = Display.new(self)
     @turn = :green
+    @king_side_castling = :possible
     @coordinates_finder = Coordinates_Finder.new(self)
   end
 
