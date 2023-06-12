@@ -1,11 +1,14 @@
   require_relative 'pieces/piece'
   require_relative 'display'
   require_relative 'coordinates_finder'
+  require_relative 'special_moves'
 
 class Board
   NO_OF_SQUARES = 64
+  INIT_ROOK_COORDINATES = [[1,1],[1,8],[8,1],[8,8]]
+  INIT_KING_COORDINATES = [[5,1],[5,8]]
   attr_accessor :grid
-  attr_reader :cursor, :previous_cursor, :squares_to_highlight, :turn, :display, :coordinates_finder, :selected_square, :king_side_castling
+  attr_reader :cursor, :previous_cursor, :squares_to_highlight, :turn, :display, :coordinates_finder, :selected_square, :special_moves
 
   def initialize
     @grid = {}
@@ -15,7 +18,7 @@ class Board
     @squares_to_highlight = []
     @display = Display.new(self)
     @turn = :green
-    @king_side_castling = :possible
+    @special_moves = Special_Moves.new(self)
     @coordinates_finder = Coordinates_Finder.new(self)
   end
 
@@ -39,9 +42,12 @@ class Board
 
   def transport_piece
     if squares_to_highlight.include?(cursor)
+      special_moves.break_castle(selected_square) if rook_or_king_is_being_moved?
       @grid[cursor] = grid[selected_square]
+
       display.transport_piece
       remove_cursor_from_hints
+      
       @grid[selected_square] = nil
       switch_turn
     end
@@ -73,5 +79,10 @@ class Board
 
   def remove_cursor_from_hints
     @squares_to_highlight -= [cursor]
+  end
+
+  def rook_or_king_is_being_moved?
+    piece_id = self.grid[selected_square].piece_id
+    (piece_id == :R || piece_id == :K) && (INIT_KING_COORDINATES + INIT_ROOK_COORDINATES).include?(selected_square)
   end
 end
