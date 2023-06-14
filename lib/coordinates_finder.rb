@@ -108,14 +108,6 @@ class Coordinates_Finder
     [from,relative_move].transpose.map(&:sum)
   end
 
-#this method is expensive and can be substituted
-  def get_current_king_coordinate
-    current_turn = board.turn
-    board.grid.reject do |coordinate, value|
-      value.nil? || value.piece_id != :K || value.color != current_turn 
-    end.keys.flatten
-  end
-
   #this method is expensive and can be substituted
   def get_squares_occupied_by_current_turn
     current_turn = board.turn
@@ -150,5 +142,22 @@ class Coordinates_Finder
     @from = @from_backup
     board.grid[from] = board.grid[highlighted_square]
     board.grid[highlighted_square] = @piece_backup 
+  end
+
+  #this method is expensive and can be substituted
+  def get_current_king_coordinate
+    current_turn = board.turn
+    board.grid.reject do |coordinate, value|
+      value.nil? || value.piece_id != :K || value.color != current_turn 
+    end.keys.flatten
+  end
+
+  protected
+
+  def get_squares_occupied_by_current_turn
+    current_turn = board.turn
+    board.grid.reject do |coordinate, value|
+      value.nil? || value.color != current_turn
+    end.keys
   end
 end

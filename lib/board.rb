@@ -1,14 +1,14 @@
   require_relative 'pieces/piece'
   require_relative 'display'
   require_relative 'coordinates_finder'
-  require_relative 'special_moves'
+  require_relative 'castling'
 
 class Board
   NO_OF_SQUARES = 64
   INIT_ROOK_COORDINATES = [[1,1],[1,8],[8,1],[8,8]]
   INIT_KING_COORDINATES = [[5,1],[5,8]]
   attr_accessor :grid
-  attr_reader :cursor, :previous_cursor, :squares_to_highlight, :turn, :display, :coordinates_finder, :selected_square, :special_moves
+  attr_reader :cursor, :previous_cursor, :squares_to_highlight, :turn, :display, :coordinates_finder, :selected_square, :castle
 
   def initialize
     @grid = {}
@@ -18,7 +18,7 @@ class Board
     @squares_to_highlight = []
     @display = Display.new(self)
     @turn = :green
-    @special_moves = Special_Moves.new(self)
+    @castle = Castling.new(self)
     @coordinates_finder = Coordinates_Finder.new(self)
   end
 
@@ -42,7 +42,7 @@ class Board
 
   def transport_piece
     if squares_to_highlight.include?(cursor)
-      special_moves.break_castle(selected_square) if rook_or_king_is_being_moved?
+      castling.break(selected_square) if rook_or_king_is_being_moved?
       @grid[cursor] = grid[selected_square]
 
       display.transport_piece

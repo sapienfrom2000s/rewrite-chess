@@ -32,7 +32,9 @@ class Human
                 board.reset_hints
                 board.deselect_square
             end
-        when 'q'
+        when "k"
+            board.castle.kingside
+        when 'e'
         exit
         end     
     end         
