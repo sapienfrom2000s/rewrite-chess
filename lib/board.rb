@@ -62,10 +62,11 @@ class Board
   end
 
   def castle_queenside
-    return unless castle.kingside_possible?
+    return unless castle.queenside_possible?
     king_init_coordinate = castle.king_init_coordinates[turn]
     manual_piece_lift(king_init_coordinate.zip([-2,0]).map(&:sum), king_init_coordinate)
     manual_piece_lift(king_init_coordinate.zip([-1,0]).map(&:sum), king_init_coordinate.zip([-4,0]).map(&:sum))
+    castle.break_both_side(turn)
     switch_turn
   end
 

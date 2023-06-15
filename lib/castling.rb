@@ -6,7 +6,7 @@ class Castling < Coordinates_Finder
   def initialize(board)
     @board = board
     @king_side = {:blue => true, :green => true}
-    @queen_side = {:blue => true, :green=> true }
+    @queen_side = {:blue => true, :green => true }
   end
 
   def break(selected_square)
@@ -17,6 +17,10 @@ class Castling < Coordinates_Finder
 
   def kingside_possible?
     kingside_available? && no_pieces_between?(:king, :king_rook) && opponent_piece_vision_not_between?(:king, :king_rook)
+  end
+
+  def queenside_possible?
+    queenside_available? && no_pieces_between?(:king, :queen_rook) && opponent_piece_vision_not_between?(:king, :queen_rook)
   end
 
   def rook_init_coordinates
@@ -43,7 +47,7 @@ class Castling < Coordinates_Finder
   private
 
   def break_one_side(color, selected_square)
-    @king_side[color] = false if rook_init_coordinates[:king_side][color] == selected_square
+    return @king_side[color] = false if rook_init_coordinates[:king_side][color] == selected_square
     @queen_side[color] = false if rook_init_coordinates[:queen_side][color] == selected_square
   end
 
@@ -53,6 +57,8 @@ class Castling < Coordinates_Finder
       king_rook_coordinate = rook_init_coordinates[:king_side][color]
       board.grid[king_rook_coordinate.zip([-2,0]).map(&:sum)].nil? && potential_coordinates(king_rook_coordinate).include?(king_rook_coordinate.zip([-2,0]).map(&:sum))
     else
+      queen_rook_coordinate = rook_init_coordinates[:queen_side][color]
+      board.grid[queen_rook_coordinate.zip([3,0]).map(&:sum)].nil? && potential_coordinates(queen_rook_coordinate).include?(queen_rook_coordinate.zip([3,0]).map(&:sum))
     end
   end
 
@@ -74,8 +80,8 @@ class Castling < Coordinates_Finder
         key_squares <<  king_init_coordinates[board.turn].zip([file_adder,0]).map(&:sum)
       end
     else
-      4.times do |file_adder|
-        key_squares <<   king_init_coordinates[board.turn].zip([file_adder*(-1),0]).map(&:sum)
+      3.times do |file_adder|
+        key_squares <<  king_init_coordinates[board.turn].zip([file_adder*(-1),0]).map(&:sum)
       end
     end
     key_squares
