@@ -1,4 +1,4 @@
-
+require 'pry-byebug'
 require_relative '../lib/board'
 require_relative '../lib/setup'
 require_relative '../lib/pieces/rook'
@@ -9,126 +9,119 @@ require_relative '../lib/pieces/knight'
 require_relative '../lib/pieces/king'
 
 describe Board do
-  before do
-    board = Board.new
-    setup = Setup.new(board)
-  end
   context 'king side castling' do
-   it 'changes the position of king and rook since no opponent pieces X-rays\
-	between king and rook and king is not in check' do
-      king_green = King.new(:green)
-      rook_green = Rook.new(:green)
-      
-      king_blue = King.new(:blue)
-      rook_blue = Rook.new(:blue)
-      setup.deploy(king_green, [[1,5]])
-      setup.deploy(rook_green, [[1,8]])
-      setup.deploy(rook_green, [[8,5]])
-      setup.deploy(rook_green, [[8,8]])
+    let(:board) { Board.new }
+    let(:setup) { Setup.new(board) }
 
-      Specialmove.castle
-      Specialmove.castle
-      expect{ king_green.coordinate }.to eq([1,7])
-      expect{ rook_green.coordinate }.to eq([1,6])
+   it 'changes the position of king and rook since no opponent pieces X-rays
+	between king and rook and king is not in check' do
+
+      king = King.new(:green)
+      rook = Rook.new(:green)
       
-      expect{ king_blue.coordinate }.to eq([8,7])
-      expect{ rook_blue.coordinate }.to eq([8,7])
-   end
+      setup.deploy(king, [[5,1]])
+      setup.deploy(rook, [[8,1]])
+      
+      board.castle_kingside
+      expect( board.grid[[7,1]] ).to equal(king)
+      expect( board.grid[[6,1]] ).to equal(rook)
+      
+    end
 
    it 'is unable to castle as a piece is present in between' do
     king = King.new(:green)
     rook = Rook.new(:green)
     
-    opponent_queen = Queen.new(:blue)
-    setup.deploy(king, [[1,5]])
-    setup.deploy(rook, [[1,8]])
-    setup.deploy(opponent_queen, [[1,6]])
+    queen = Queen.new(:green)
+    setup.deploy(king, [[5,1]])
+    setup.deploy(rook, [[8,1]])
+    setup.deploy(queen, [[6,1]])
 
-    Specialmove.castle
+    board.castle_kingside
 
-    expect{ king.coordinate }.to eq([1,5])
-    expect{ rook.coordinate }.to eq([1,8])
-    
+    expect( board.grid[[5,1]] ).to equal(king)
+    expect( board.grid[[8,1]] ).to equal(rook)
    end
 
-   it 'is unable to castle as opponent queen X-rays between king and rook' do
+   it 'is unable to castle as opponent queen has checked the king' do
     king = King.new(:green)
     rook = Rook.new(:green)
     
     opponent_queen = Queen.new(:blue)
-    setup.deploy(king, [[1,5]])
-    setup.deploy(rook, [[1,8]])
-    setup.deploy(opponent_queen, [[5,6]])
 
-    Specialmove.castle
+    setup.deploy(king, [[5,1]])
+    setup.deploy(rook, [[8,1]])
+    setup.deploy(opponent_queen, [[8,4]])
 
-    expect{ king.coordinate }.to eq([1,5])
-    expect{ rook.coordinate }.to eq([1,8])
-    
+    board.castle_kingside
+
+    expect( board.grid[[5,1]] ).to equal(king)
+    expect( board.grid[[8,1]] ).to equal(rook)
+
    end
 
-   it 'is unable to castle as opponent pawn X-rays between king and rook' do
+   it 'is unable to castle as opponent queen xrays between king and queen' do
+    king = King.new(:green)
+    rook = Rook.new(:green)
+    
+    opponent_queen = Queen.new(:blue)
+
+    setup.deploy(king, [[5,1]])
+    setup.deploy(rook, [[8,1]])
+    setup.deploy(opponent_queen, [[7,8]])
+
+    board.castle_kingside
+
+    expect( board.grid[[5,1]] ).to equal(king)
+    expect( board.grid[[8,1]] ).to equal(rook)
+
+   end
+
+   it 'is unable to castle as opponent pawn xrays between king and queen' do
     king = King.new(:green)
     rook = Rook.new(:green)
     
     opponent_pawn = Pawn.new(:blue)
-    setup.deploy(king, [[1,5]])
-    setup.deploy(rook, [[1,8]])
-    setup.deploy(opponent_pawn, [[2,7]])
 
-    Specialmove.castle
+    setup.deploy(king, [[5,1]])
+    setup.deploy(rook, [[8,1]])
+    setup.deploy(opponent_pawn, [[7,2]])
 
-    expect{ king.coordinate }.to eq([1,5])
-    expect{ rook.coordinate }.to eq([1,8])
+    board.castle_kingside
+
+    expect( board.grid[[5,1]] ).to equal(king)
+    expect( board.grid[[8,1]] ).to equal(rook)
+
    end
 
-   it 'is unable to castle as king is in check' do
+   it 'is unable to castle as king has already moved' do
     king = King.new(:green)
     rook = Rook.new(:green)
     
-    opponent_pawn = Pawn.new(:blue)
-    setup.deploy(king, [[1,5]])
-    setup.deploy(rook, [[1,8]])
-    setup.deploy(opponent_pawn, [[2,7]])
+    setup.deploy(king, [[5,1]])
+    setup.deploy(rook, [[8,1]])
+    board.castle.break([5,1])
 
-    Specialmove.castle
+    board.castle_kingside
 
-    expect{ king.coordinate }.to eq([1,5])
-    expect{ rook.coordinate }.to eq([1,8])    
+    expect( board.grid[[5,1]] ).to equal(king)
+    expect( board.grid[[8,1]] ).to equal(rook)
+
    end
 
-   it 'is unable to castle as king has already moved earlier' do
+   it 'is unable to castle as king side rook has already moved' do
     king = King.new(:green)
     rook = Rook.new(:green)
     
-    opponent_pawn = Pawn.new(:blue)
-    setup.deploy(king, [[1,5]])
-    setup.deploy(rook, [[1,8]])
-    setup.deploy(opponent_pawn, [[2,7]])
-    king.move('somewhere')
-    current_move = :green
+    setup.deploy(king, [[5,1]])
+    setup.deploy(rook, [[8,1]])
+    board.castle.break([8,1])
 
-    Specialmove.castle
+    board.castle_kingside
 
-    expect{ king.coordinate }.to eq([1,5])
-    expect{ rook.coordinate }.to eq([1,8])    
+    expect( board.grid[[5,1]] ).to equal(king)
+    expect( board.grid[[8,1]] ).to equal(rook)
+
    end
-
-   it 'is unable to castle as rook has already moved' do
-    king = King.new(:green)
-    rook = Rook.new(:green)
-    
-    opponent_pawn = Pawn.new(:blue)
-    setup.deploy(king, [[1,5]])
-    setup.deploy(rook, [[1,8]])
-    setup.deploy(opponent_pawn, [[2,7]])
-    rook.move('somewhere')
-    current_move = :green
-
-    Specialmove.castle
-
-    expect{ king.coordinate }.to eq([1,5])
-    expect{ rook.coordinate }.to eq([1,8])
-   end 
   end
 end

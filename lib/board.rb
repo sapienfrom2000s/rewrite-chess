@@ -42,15 +42,31 @@ class Board
 
   def transport_piece
     if squares_to_highlight.include?(cursor)
-      castling.break(selected_square) if rook_or_king_is_being_moved?
-      @grid[cursor] = grid[selected_square]
-
+      castle.break(selected_square) if rook_or_king_is_being_moved?
+      @grid[cursor] = grid[selected_square] 
       display.transport_piece
       remove_cursor_from_hints
       
       @grid[selected_square] = nil
       switch_turn
     end
+  end
+
+  def castle_kingside
+    return unless castle.kingside_possible?
+    king_init_coordinate = castle.king_init_coordinates[turn]
+    manual_piece_lift(king_init_coordinate.zip([2,0]).map(&:sum), king_init_coordinate)
+    manual_piece_lift(king_init_coordinate.zip([1,0]).map(&:sum), king_init_coordinate.zip([3,0]).map(&:sum))
+    castle.break_both_side(turn)
+    switch_turn
+  end
+
+  def castle_queenside
+    return unless castle.kingside_possible?
+    king_init_coordinate = castle.king_init_coordinates[turn]
+    manual_piece_lift(king_init_coordinate.zip([-2,0]).map(&:sum), king_init_coordinate)
+    manual_piece_lift(king_init_coordinate.zip([-1,0]).map(&:sum), king_init_coordinate.zip([-4,0]).map(&:sum))
+    switch_turn
   end
 
   def reset_hints
@@ -70,6 +86,16 @@ class Board
   end
 
   private
+
+  def manual_piece_lift(cursor, selected_square)
+    @cursor = cursor
+    @previous_cursor = previous_cursor
+    @selected_square = selected_square
+    @grid[cursor] = grid[selected_square] 
+    display.transport_piece
+    
+    @grid[selected_square] = nil
+  end
 
   def make_grid
     files_and_ranks = *(1..8)

@@ -1,6 +1,8 @@
 
 class Castling < Coordinates_Finder
-  attr_reader :board, :king_side, :queen_side
+  attr_reader :board
+  attr_accessor :king_side, :queen_side 
+
   def initialize(board)
     @board = board
     @king_side = {:blue => true, :green => true}
@@ -13,22 +15,8 @@ class Castling < Coordinates_Finder
     break_one_side(piece.color.to_sym, selected_square) if piece.piece_id == :R
   end
 
-  def kingside
-    return unless kingside_available? && no_pieces_between?(:king, :king_rook) && opponent_piece_vision_not_between?(:king, :king_rook)
-    board.grid[]
-
-  end
-
-  private
-
-  def break_both_side(color)
-    @king_side[color] = false
-    @queen_side[color] = false
-  end
-
-  def break_one_side(color, selected_square)
-    @king_side[color] = false if rook_init_coordinates[:king_side][color] == selected_square
-    @queen_side[color] = false if rook_init_coordinates[:queen_side][color] == selected_square
+  def kingside_possible?
+    kingside_available? && no_pieces_between?(:king, :king_rook) && opponent_piece_vision_not_between?(:king, :king_rook)
   end
 
   def rook_init_coordinates
@@ -43,11 +31,27 @@ class Castling < Coordinates_Finder
     king_side[board.turn]
   end
 
+  def queenside_available?
+    queen_side[board.turn]
+  end
+
+  def break_both_side(color)
+    @king_side[color] = false
+    @queen_side[color] = false
+  end
+
+  private
+
+  def break_one_side(color, selected_square)
+    @king_side[color] = false if rook_init_coordinates[:king_side][color] == selected_square
+    @queen_side[color] = false if rook_init_coordinates[:queen_side][color] == selected_square
+  end
+
   def no_pieces_between?(king, rook)
     color = board.turn
     if rook == :king_rook
       king_rook_coordinate = rook_init_coordinates[:king_side][color]
-      board.grid[king_rook_coordinate-[2,0]].nil? && potential_coordinates(king_rook_coordinate).include?(king_rook_coordinate-[2,0])
+      board.grid[king_rook_coordinate.zip([-2,0]).map(&:sum)].nil? && potential_coordinates(king_rook_coordinate).include?(king_rook_coordinate.zip([-2,0]).map(&:sum))
     else
     end
   end
@@ -67,12 +71,13 @@ class Castling < Coordinates_Finder
     key_squares = []
     if rook == :king_rook
       3.times do |file_adder|
-        key_squares << king_init_coordinates[board.turn] + [file_adder,0]
+        key_squares <<  king_init_coordinates[board.turn].zip([file_adder,0]).map(&:sum)
       end
     else
       4.times do |file_adder|
-        key_squares << king_init_coordinates[board.turn] - [file_adder,0]
+        key_squares <<   king_init_coordinates[board.turn].zip([file_adder*(-1),0]).map(&:sum)
       end
     end
+    key_squares
   end
 end
