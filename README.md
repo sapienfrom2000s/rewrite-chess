@@ -6,6 +6,7 @@ New feature:
 queen-side castling possible by pressing 'q'
 king-side castling possible by pressing 'k'
 exit anytime out of the game by pressing 'e'
+Promotion feature is available
 
 Use of 'coordinates' and 'squares' are synonymous. For display
 squares has been used and in other places coordinates have
