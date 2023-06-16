@@ -85,7 +85,7 @@ class Board
   def switch_turn
     @turn = turn == :green ? :blue : :green
   end
-
+  
   private
 
   def manual_piece_lift(cursor, selected_square)
