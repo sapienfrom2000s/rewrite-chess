@@ -2,13 +2,14 @@
   require_relative 'display'
   require_relative 'coordinates_finder'
   require_relative 'castling'
+  require_relative 'promotion'
 
 class Board
   NO_OF_SQUARES = 64
   INIT_ROOK_COORDINATES = [[1,1],[1,8],[8,1],[8,8]]
   INIT_KING_COORDINATES = [[5,1],[5,8]]
   attr_accessor :grid
-  attr_reader :cursor, :previous_cursor, :squares_to_highlight, :turn, :display, :coordinates_finder, :selected_square, :castle
+  attr_reader :cursor, :previous_cursor, :squares_to_highlight, :turn, :display, :coordinates_finder, :selected_square, :castle, :promotion
 
   def initialize
     @grid = {}
@@ -20,6 +21,7 @@ class Board
     @turn = :green
     @castle = Castling.new(self)
     @coordinates_finder = Coordinates_Finder.new(self)
+    @promotion = Promotion.new(self)
   end
 
   def update_cursor(relative_move)
@@ -43,6 +45,8 @@ class Board
   def transport_piece
     if squares_to_highlight.include?(cursor)
       castle.break(selected_square) if rook_or_king_is_being_moved?
+      promotion.mutate_pawn(selected_square) if grid[selected_square].piece_id == :P && (cursor.last == 1 || cursor.last == 8)
+
       @grid[cursor] = grid[selected_square] 
       display.transport_piece
       remove_cursor_from_hints
