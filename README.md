@@ -14,4 +14,7 @@ been used. However, this is not very black and white, 'squares'
 might have been used at places where it fits in more appropriately
 than 'coordinates'.
 
+Coordinate_Finder is more of a module than a class.Will try to 
+make that change in future.
+
 This project is inspired by Haseeb Qureshi's version of chess
