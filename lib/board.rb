@@ -5,11 +5,14 @@
   require_relative 'promotion'
 
 class Board
+
+  include Coordinates_Finder
+
   NO_OF_SQUARES = 64
   INIT_ROOK_COORDINATES = [[1,1],[1,8],[8,1],[8,8]]
   INIT_KING_COORDINATES = [[5,1],[5,8]]
   attr_accessor :grid
-  attr_reader :cursor, :previous_cursor, :squares_to_highlight, :turn, :display, :coordinates_finder, :selected_square, :castle, :promotion
+  attr_reader :cursor, :previous_cursor, :squares_to_highlight, :turn, :display, :selected_square, :castle, :promotion
 
   def initialize
     @grid = {}
@@ -20,8 +23,8 @@ class Board
     @display = Display.new(self)
     @turn = :green
     @castle = Castling.new(self)
-    @coordinates_finder = Coordinates_Finder.new(self)
     @promotion = Promotion.new(self)
+    @board = self
   end
 
   def update_cursor(relative_move)
@@ -38,8 +41,8 @@ class Board
 
   def fill_hints
     return if grid[cursor].nil?
-    @squares_to_highlight = coordinates_finder.potential_coordinates(cursor)
-    @squares_to_highlight = coordinates_finder.reject_coordinates_that_exposes_own_king
+    @squares_to_highlight = potential_coordinates(cursor)
+    @squares_to_highlight = reject_coordinates_that_exposes_own_king
   end
 
   def transport_piece

@@ -14,8 +14,7 @@ describe Rook do
         it 'will give an array of squares it can go to' do
             rook = Rook.new(:green)
             setup.deploy(rook,[[1,1]])
-            squares_finder = Coordinates_Finder.new(board)
-            expect(squares_finder.potential_coordinates([1,1])).to eq([[2,1],[3,1],[4,1],[5,1],[6,1],[7,1],[8,1],[1,2],[1,3],[1,4],[1,5],[1,6],[1,7],[1,8]])
+            expect(board.potential_coordinates([1,1])).to eq([[2,1],[3,1],[4,1],[5,1],[6,1],[7,1],[8,1],[1,2],[1,3],[1,4],[1,5],[1,6],[1,7],[1,8]])
         end
     end
 
@@ -23,8 +22,7 @@ describe Rook do
         it 'will give an array of squares it can go to' do
             rook = Rook.new(:green)
             setup.deploy(rook,[[5,6]])
-            squares_finder = Coordinates_Finder.new(board)
-            expect(squares_finder.potential_coordinates([5,6])).to eq([[6,6],[7,6],[8,6],[5,5],[5,4],[5,3],[5,2],[5,1],[4,6],[3,6],[2,6],[1,6],[5,7],[5,8]])
+            expect(board.potential_coordinates([5,6])).to eq([[6,6],[7,6],[8,6],[5,5],[5,4],[5,3],[5,2],[5,1],[4,6],[3,6],[2,6],[1,6],[5,7],[5,8]])
         end
     end
 
@@ -32,8 +30,7 @@ describe Rook do
         it 'will give an array of squares it can go to' do
             rook = Rook.new(:green)
             setup.deploy(rook,[[5,6],[5,7],[5,5],[4,6]])
-            squares_finder = Coordinates_Finder.new(board)
-            expect(squares_finder.potential_coordinates([5,6])).to eq([[6,6],[7,6],[8,6]])
+            expect(board.potential_coordinates([5,6])).to eq([[6,6],[7,6],[8,6]])
         end
     end
 
@@ -43,8 +40,7 @@ describe Rook do
             rook2 = Rook.new(:black)
             setup.deploy(rook1,[[5,6],[5,7],[5,5],[4,6]])
             setup.deploy(rook2,[[6,6]])
-            squares_finder = Coordinates_Finder.new(board)
-            expect(squares_finder.potential_coordinates([5,6])).to eq([[6,6]])
+            expect(board.potential_coordinates([5,6])).to eq([[6,6]])
         end
     end
 end
@@ -57,8 +53,7 @@ describe Bishop do
         it 'will give an array of squares it can go to' do
             bishop = Bishop.new(:green)
             setup.deploy(bishop,[[1,1]])
-            squares_finder = Coordinates_Finder.new(board)
-            expect(squares_finder.potential_coordinates([1,1])).to eq([[2,2],[3,3],[4,4],[5,5],[6,6],[7,7],[8,8]])
+            expect(board.potential_coordinates([1,1])).to eq([[2,2],[3,3],[4,4],[5,5],[6,6],[7,7],[8,8]])
         end
     end
 
@@ -66,8 +61,7 @@ describe Bishop do
         it 'will give an array of squares it can go to' do
             bishop = Bishop.new(:green)
             setup.deploy(bishop,[[5,6]])
-            squares_finder = Coordinates_Finder.new(board)
-            expect(squares_finder.potential_coordinates([5,6])).to eq([[6,7],[7,8],[4,7],[3,8],[4,5],[3,4],[2,3],[1,2],[6,5],[7,4],[8,3]])
+            expect(board.potential_coordinates([5,6])).to eq([[6,7],[7,8],[4,7],[3,8],[4,5],[3,4],[2,3],[1,2],[6,5],[7,4],[8,3]])
         end
     end
 
@@ -75,8 +69,7 @@ describe Bishop do
         it 'will give an array of squares it can go to' do
             bishop = Bishop.new(:green)
             setup.deploy(bishop,[[5,6],[6,7],[4,7],[4,5]])
-            squares_finder = Coordinates_Finder.new(board)
-            expect(squares_finder.potential_coordinates([5,6])).to eq([[6,5],[7,4],[8,3]])
+            expect(board.potential_coordinates([5,6])).to eq([[6,5],[7,4],[8,3]])
         end
     end
 
@@ -86,8 +79,7 @@ describe Bishop do
             rook2 = Bishop.new(:black)
             setup.deploy(rook1,[[5,6],[4,7],[4,5],[6,5]])
             setup.deploy(rook2,[[6,7]])
-            squares_finder = Coordinates_Finder.new(board)
-            expect(squares_finder.potential_coordinates([5,6])).to eq([[6,7]])
+            expect(board.potential_coordinates([5,6])).to eq([[6,7]])
         end
     end
 end

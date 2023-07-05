@@ -1,12 +1,8 @@
 require 'pry-byebug'
 
-class Coordinates_Finder
+module Coordinates_Finder
 
   attr_reader :board, :from, :current_king_coordinate
-
-  def initialize(board)
-      @board = board
-  end
 
   def potential_coordinates(from)
     @from = from
