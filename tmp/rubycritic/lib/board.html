@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2023-06-15 19:17:47 +0530'>2023-06-15 19:17:47 +0530</time>
+          Updated <time class='js-timeago' datetime='2023-07-05 21:42:00 +0530'>2023-07-05 21:42:00 +0530</time>
         
       </span>
     </div>
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">115</span><small> lines of codes</small></div>
+              <div><span class="metric">122</span><small> lines of codes</small></div>
               <div><span class="metric">15</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">10.0</span><small> complexity/method</small></div>
-              <div><span class="metric">11</span><small> churn</small></div>
+              <div><span class="metric">11.5</span><small> complexity/method</small></div>
+              <div><span class="metric">14</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">150.11</span><small> complexity</small></div>
+              <div><span class="metric">173.2</span><small> complexity</small></div>
               <div><span class="metric">84</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                11
+                14
                 smells
               </a>
             </li>
@@ -101,13 +101,17 @@
   require_relative &#39;display&#39;
   require_relative &#39;coordinates_finder&#39;
   require_relative &#39;castling&#39;
+  require_relative &#39;promotion&#39;
 
-class Board<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>Board has no descriptive comment</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Too-Many-Instance-Variables.md" target="_blank"><b>TooManyInstanceVariables</b></a>        </span>      </div>      <span>Board has at least 9 instance variables</span>          </div>  </li></ol>
+class Board<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>Board has no descriptive comment</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Too-Many-Instance-Variables.md" target="_blank"><b>TooManyInstanceVariables</b></a>        </span>      </div>      <span>Board has at least 10 instance variables</span>          </div>  </li></ol>
+
+  include Coordinates_Finder
+
   NO_OF_SQUARES = 64
   INIT_ROOK_COORDINATES = [[1,1],[1,8],[8,1],[8,8]]
   INIT_KING_COORDINATES = [[5,1],[5,8]]
   attr_accessor :grid<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Attribute.md" target="_blank"><b>Attribute</b></a>        </span>      </div>      <span>Board#grid is a writable attribute</span>          </div>  </li></ol>
-  attr_reader :cursor, :previous_cursor, :squares_to_highlight, :turn, :display, :coordinates_finder, :selected_square, :castle
+  attr_reader :cursor, :previous_cursor, :squares_to_highlight, :turn, :display, :selected_square, :castle, :promotion
 
   def initialize
     @grid = {}
@@ -118,7 +122,8 @@ class Board<ol class="nocode errors smells">  <li>    <div class="description"> 
     @display = Display.new(self)
     @turn = :green
     @castle = Castling.new(self)
-    @coordinates_finder = Coordinates_Finder.new(self)
+    @promotion = Promotion.new(self)
+    @board = self
   end
 
   def update_cursor(relative_move)
@@ -135,14 +140,16 @@ class Board<ol class="nocode errors smells">  <li>    <div class="description"> 
 
   def fill_hints
     return if grid[cursor].nil?<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nil-Check.md" target="_blank"><b>NilCheck</b></a>        </span>      </div>      <span>Board#fill_hints performs a nil-check</span>          </div>  </li></ol>
-    @squares_to_highlight = coordinates_finder.potential_coordinates(cursor)
-    @squares_to_highlight = coordinates_finder.reject_coordinates_that_exposes_own_king
+    @squares_to_highlight = potential_coordinates(cursor)
+    @squares_to_highlight = reject_coordinates_that_exposes_own_king
   end
 
-  def transport_piece<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Too-Many-Statements.md" target="_blank"><b>TooManyStatements</b></a>        </span>      </div>      <span>Board#transport_piece has approx 6 statements</span>          </div>  </li></ol>
+  def transport_piece<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Board#transport_piece has a flog score of 47</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Too-Many-Statements.md" target="_blank"><b>TooManyStatements</b></a>        </span>      </div>      <span>Board#transport_piece has approx 7 statements</span>          </div>  </li></ol>
     if squares_to_highlight.include?(cursor)
       castle.break(selected_square) if rook_or_king_is_being_moved?
-      @grid[cursor] = grid[selected_square] 
+      promotion.mutate_pawn(selected_square) if grid[selected_square].piece_id == :P &amp;&amp; (cursor.last == 1 || cursor.last == 8)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Board#transport_piece calls 'cursor.last' 2 times</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Board#transport_piece calls 'grid[selected_square]' 2 times</span>              <span>Locations:</span>                  <a href="board.html#L51" class="js-smell-location">0</a>                  <a href="board.html#L53" class="js-smell-location">1</a>                  </div>  </li></ol>
+
+      @grid[cursor] = grid[selected_square] <ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Board#transport_piece calls 'grid[selected_square]' 2 times</span>              <span>Locations:</span>                  <a href="board.html#L51" class="js-smell-location">0</a>                  <a href="board.html#L53" class="js-smell-location">1</a>                  </div>  </li></ol>
       display.transport_piece
       remove_cursor_from_hints
       
@@ -151,7 +158,7 @@ class Board<ol class="nocode errors smells">  <li>    <div class="description"> 
     end
   end
 
-  def castle_kingside<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="board.html#L55" class="js-smell-location">0</a>                  <a href="board.html#L64" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Board#castle_kingside has a flog score of 29</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Too-Many-Statements.md" target="_blank"><b>TooManyStatements</b></a>        </span>      </div>      <span>Board#castle_kingside has approx 6 statements</span>          </div>  </li></ol>
+  def castle_kingside<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="board.html#L62" class="js-smell-location">0</a>                  <a href="board.html#L71" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Board#castle_kingside has a flog score of 29</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Too-Many-Statements.md" target="_blank"><b>TooManyStatements</b></a>        </span>      </div>      <span>Board#castle_kingside has approx 6 statements</span>          </div>  </li></ol>
     return unless castle.kingside_possible?
     king_init_coordinate = castle.king_init_coordinates[turn]
     manual_piece_lift(king_init_coordinate.zip([2,0]).map(&amp;:sum), king_init_coordinate)
@@ -160,7 +167,7 @@ class Board<ol class="nocode errors smells">  <li>    <div class="description"> 
     switch_turn
   end
 
-  def castle_queenside<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="board.html#L55" class="js-smell-location">0</a>                  <a href="board.html#L64" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Board#castle_queenside has a flog score of 28</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Too-Many-Statements.md" target="_blank"><b>TooManyStatements</b></a>        </span>      </div>      <span>Board#castle_queenside has approx 6 statements</span>          </div>  </li></ol>
+  def castle_queenside<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="board.html#L62" class="js-smell-location">0</a>                  <a href="board.html#L71" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Board#castle_queenside has a flog score of 28</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Too-Many-Statements.md" target="_blank"><b>TooManyStatements</b></a>        </span>      </div>      <span>Board#castle_queenside has approx 6 statements</span>          </div>  </li></ol>
     return unless castle.queenside_possible?
     king_init_coordinate = castle.king_init_coordinates[turn]
     manual_piece_lift(king_init_coordinate.zip([-2,0]).map(&amp;:sum), king_init_coordinate)
@@ -184,7 +191,7 @@ class Board<ol class="nocode errors smells">  <li>    <div class="description"> 
   def switch_turn
     @turn = turn == :green ? :blue : :green
   end
-
+  
   private
 
   def manual_piece_lift(cursor, selected_square)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Too-Many-Statements.md" target="_blank"><b>TooManyStatements</b></a>        </span>      </div>      <span>Board#manual_piece_lift has approx 6 statements</span>          </div>  </li></ol>

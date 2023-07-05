@@ -31,11 +31,12 @@ module Coordinates_Finder
 
   def get_potential_coordinates_of_piece_wrt_range(range)
     coordinates = []
-    piece = board.grid[from]
+    board_grid = board.grid
+    piece = board_grid[from]
     inbound_coordinates = inbound_possible_coordinates(piece, range)
     inbound_coordinates.each do |set|
       set.each do |coordinate|
-        current_piece = board.grid[coordinate]
+        current_piece = board_  grid[coordinate]
         if current_piece.nil?
           coordinates.push(coordinate)
         elsif current_piece.color == board.turn
