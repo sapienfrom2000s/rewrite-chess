@@ -1,0 +1,3 @@
+#ignore .README.md.swp file
+/.README.md.swp
+/tmp/*
