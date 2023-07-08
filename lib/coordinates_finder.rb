@@ -36,7 +36,7 @@ module Coordinates_Finder
     inbound_coordinates = inbound_possible_coordinates(piece, range)
     inbound_coordinates.each do |set|
       set.each do |coordinate|
-        current_piece = board_  grid[coordinate]
+        current_piece = board_grid[coordinate]
         if current_piece.nil?
           coordinates.push(coordinate)
         elsif current_piece.color == board.turn
