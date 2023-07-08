@@ -8,3 +8,4 @@ source "https://rubygems.org"
 
  gem "colorize"
  gem "tty-cursor"
+ gem "pry-byebug"
