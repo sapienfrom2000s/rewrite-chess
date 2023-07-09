@@ -147,7 +147,7 @@ describe Pawn do
         it 'will give an array of squares it can go to' do
             pawn = Pawn.new(:blue)
             setup.deploy(pawn,[[1,7]])
-            board.stub(:turn => :blue)
+            allow(board).to receive(:turn) {:blue} 
             expect(board.potential_coordinates([1,7])).to eq([[1,6],[1,5]])
         end
     end
@@ -158,7 +158,7 @@ describe Pawn do
             pawn2 = Pawn.new(:green)
             setup.deploy(pawn1,[[5,7]])
             setup.deploy(pawn2,[[4,6],[4,5]])
-            board.stub(:turn => :blue)
+            allow(board).to receive(:turn) {:blue}
             expect(board.potential_coordinates([5,7])).to eq([[5,6], [5,5],[4,6]])
         end
     end
@@ -167,7 +167,7 @@ describe Pawn do
         it 'will give an array of squares it can go to' do
             pawn = Pawn.new(:blue)
             setup.deploy(pawn,[[5,6]])
-            board.stub(:turn => :blue)
+            allow(board).to receive(:turn) {:blue}
             expect(board.potential_coordinates([5,6])).to eq([[5,5]])
         end
     end
@@ -176,7 +176,7 @@ describe Pawn do
         it 'will give an array of squares it can go to' do
             pawn = Pawn.new(:blue)
             setup.deploy(pawn,[[8,6]])
-            board.stub(:turn => :blue)
+            allow(board).to receive(:turn) {:blue}
             expect(board.potential_coordinates([8,6])).to eq([[8,5]])
         end
     end
@@ -185,7 +185,7 @@ describe Pawn do
         it 'will give an array of squares it can go to' do
             pawn = Pawn.new(:blue)
             setup.deploy(pawn,[[5,7]])
-            board.stub(:turn => :blue)
+            allow(board).to receive(:turn) {:blue}
             expect(board.potential_coordinates([5,7])).to eq([[5,6], [5,5]])
         end
     end
@@ -196,7 +196,7 @@ describe Pawn do
             rook = Rook.new(:blue)
             setup.deploy(pawn,[[5,7]])
             setup.deploy(rook,[[5,5]])
-            board.stub(:turn => :blue)
+            allow(board).to receive(:turn) {:blue}
             expect(board.potential_coordinates([5,7])).to eq([[5,6]])
         end
     end
@@ -207,7 +207,7 @@ describe Pawn do
             pawn2 = Pawn.new(:green)
             setup.deploy(pawn1,[[5,7]])
             setup.deploy(pawn2,[[5,6]])
-            board.stub(:turn => :blue)
+            allow(board).to receive(:turn) {:blue}
             expect(board.potential_coordinates([5,7])).to eq([])
         end
     end
@@ -218,7 +218,7 @@ describe Pawn do
             pawn2 = Pawn.new(:green)
             setup.deploy(pawn1,[[7, 5]])
             setup.deploy(pawn2,[[7, 4]])
-            board.stub(:turn => :blue)
+            allow(board).to receive(:turn) {:blue}
             expect(board.potential_coordinates([7, 4])).to eq([])
         end
     end
@@ -236,7 +236,7 @@ describe Pawn do
             pawn2 = Pawn.new(:green)
             setup.deploy(pawn1,[[5, 7]])
             setup.deploy(pawn2,[[4, 6]])
-            board.stub(:turn => :blue)
+            allow(board).to receive(:turn) {:blue}
             expect(board.potential_coordinates([5, 7])).to eq([[5,6],[5, 5],[4, 6]])
         end
     end
@@ -247,7 +247,7 @@ describe Pawn do
             pawn2 = Pawn.new(:blue)
             setup.deploy(pawn1,[[5, 7]])
             setup.deploy(pawn2,[[4, 5]])
-            board.stub(:turn => :blue)
+            allow(board).to receive(:turn) {:blue}
             expect(board.potential_coordinates([5, 7])).to eq([[5, 6],[5, 5]])
         end
     end
@@ -258,7 +258,7 @@ describe Pawn do
             pawn2 = Pawn.new(:green)
             setup.deploy(pawn1,[[7, 5]])
             setup.deploy(pawn2,[[6, 4], [8, 4]])
-            board.stub(:turn => :blue)
+            allow(board).to receive(:turn) {:blue}
             expect(board.potential_coordinates([7,5])).to eq([[7,4], [6, 4],[8, 4]])
         end
     end
