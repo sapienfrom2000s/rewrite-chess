@@ -1,9 +1,0 @@
-#ignore vim recovery files
-*.swp
-*.swo
-
-#ignore linux backup files
-*~
-
-#ignore rubycritic files
-/tmp/*
