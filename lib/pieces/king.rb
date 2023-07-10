@@ -1,5 +1,5 @@
 
-require_relative 'piece'
+require 'pieces/piece'
 
 class King < Piece
 

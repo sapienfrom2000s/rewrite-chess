@@ -1,4 +1,4 @@
-require_relative 'piece'
+require 'pieces/piece'
 
 class Bishop < Piece
   attr_reader :piece_id, :movement, :image

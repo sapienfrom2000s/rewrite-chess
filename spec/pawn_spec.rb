@@ -3,7 +3,6 @@ require_relative '../lib/pieces/rook'
 require_relative '../lib/board'
 require_relative '../lib/setup'
 require_relative '../lib/coordinates_finder'
-require 'pry-byebug'
 
 describe Pawn do
     let(:board) { Board.new }

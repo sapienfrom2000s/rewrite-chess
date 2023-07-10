@@ -1,4 +1,4 @@
-require 'pry-byebug'
+
 require_relative '../lib/board'
 require_relative '../lib/setup'
 require_relative '../lib/pieces/rook'

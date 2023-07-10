@@ -1,13 +1,15 @@
-require_relative 'board'
-require_relative 'display'
-require_relative 'human'
-require_relative 'setup'
-require_relative 'pieces/rook'
-require_relative 'pieces/bishop'
-require_relative 'pieces/queen'
-require_relative 'pieces/pawn'
-require_relative 'pieces/knight'
-require_relative 'pieces/king'
+$LOAD_PATH.unshift(File.dirname(__FILE__))
+
+require 'board'
+require 'display'
+require 'human'
+require 'setup'
+require 'pieces/rook'
+require 'pieces/bishop'
+require 'pieces/queen'
+require 'pieces/pawn'
+require 'pieces/knight'
+require 'pieces/king'
 
 
 board = Board.new

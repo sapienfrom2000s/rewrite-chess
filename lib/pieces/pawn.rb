@@ -1,4 +1,4 @@
-require_relative 'piece'
+require 'pieces/piece'
 
 class Pawn < Piece
   attr_reader :piece_id, :movement, :image

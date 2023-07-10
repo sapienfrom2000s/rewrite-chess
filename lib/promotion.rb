@@ -1,7 +1,7 @@
-require_relative 'pieces/bishop'
-require_relative 'pieces/knight'
-require_relative 'pieces/rook'
-require_relative 'pieces/queen'
+require 'pieces/bishop'
+require 'pieces/knight'
+require 'pieces/rook'
+require 'pieces/queen'
 
 class Promotion
   attr_reader :board

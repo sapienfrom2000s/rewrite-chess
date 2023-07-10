@@ -1,8 +1,8 @@
-  require_relative 'pieces/piece'
-  require_relative 'display'
-  require_relative 'coordinates_finder'
-  require_relative 'castling'
-  require_relative 'promotion'
+  require 'pieces/piece'
+  require 'display'
+  require 'coordinates_finder'
+  require 'castling'
+  require 'promotion'
 
 class Board
 

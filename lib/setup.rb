@@ -1,4 +1,4 @@
-require_relative 'board'
+require 'board'
 
 class Setup
     attr_reader :board
