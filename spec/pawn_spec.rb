@@ -146,7 +146,7 @@ describe Pawn do
         it 'will give an array of squares it can go to' do
             pawn = Pawn.new(:blue)
             setup.deploy(pawn,[[1,7]])
-            allow(board).to receive(:turn) {:blue} 
+            allow(board).to receive(:turn) {:blue}
             expect(board.potential_coordinates([1,7])).to eq([[1,6],[1,5]])
         end
     end

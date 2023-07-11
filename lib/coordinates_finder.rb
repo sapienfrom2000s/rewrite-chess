@@ -11,7 +11,7 @@ module Coordinates_Finder
     when :B, :R, :Q
       get_potential_coordinates_of_piece_wrt_range((1..7))
     when :P
-      get_potential_coordinates_of_pawn_without_capture + 
+      get_potential_coordinates_of_pawn_without_capture +
       get_potential_pawn_captures
     else
       get_potential_coordinates_of_piece_wrt_range((1..1))
@@ -89,10 +89,10 @@ module Coordinates_Finder
       coordinate_subset = []
       range.each do |multiplier|
         new_coordinate = forge_coordinate(rel = amplified_movement(relative_move, multiplier))
-        break unless new_coordinate.first.between?(1,8) && new_coordinate.last.between?(1,8) 
+        break unless new_coordinate.first.between?(1,8) && new_coordinate.last.between?(1,8)
         coordinate_subset.push(new_coordinate)
       end
-      coordinates.push(coordinate_subset) 
+      coordinates.push(coordinate_subset)
     end
     coordinates
   end
@@ -112,10 +112,10 @@ module Coordinates_Finder
       value.nil? || value.color != current_turn
     end.keys
   end
-  
+
   def current_king_exposed?(highlighted_square)
     pseudo_move(highlighted_square)
-    board.switch_turn 
+    board.switch_turn
     flag = get_squares_occupied_by_current_turn.any? do |coordinate|
       potential_coordinates(coordinate).include?(current_king_coordinate)
     end
@@ -138,14 +138,14 @@ module Coordinates_Finder
   def undo_move(highlighted_square)
     @from = @from_backup
     board.grid[from] = board.grid[highlighted_square]
-    board.grid[highlighted_square] = @piece_backup 
+    board.grid[highlighted_square] = @piece_backup
   end
 
   #this method is expensive and can be substituted
   def get_current_king_coordinate
     current_turn = board.turn
     board.grid.reject do |coordinate, value|
-      value.nil? || value.piece_id != :K || value.color != current_turn 
+      value.nil? || value.piece_id != :K || value.color != current_turn
     end.keys.flatten
   end
 
