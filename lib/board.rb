@@ -4,6 +4,7 @@
   require 'castling'
   require 'promotion'
 
+  #add this comment to test patch
 class Board
 
   include Coordinates_Finder
@@ -50,10 +51,10 @@ class Board
       castle.break(selected_square) if rook_or_king_is_being_moved?
       promotion.mutate_pawn(selected_square) if grid[selected_square].piece_id == :P && (cursor.last == 1 || cursor.last == 8)
 
-      @grid[cursor] = grid[selected_square] 
+      @grid[cursor] = grid[selected_square]
       display.transport_piece
       remove_cursor_from_hints
-      
+
       @grid[selected_square] = nil
       switch_turn
     end
@@ -92,16 +93,16 @@ class Board
   def switch_turn
     @turn = turn == :green ? :blue : :green
   end
-  
+
   private
 
   def manual_piece_lift(cursor, selected_square)
     @cursor = cursor
     @previous_cursor = previous_cursor
     @selected_square = selected_square
-    @grid[cursor] = grid[selected_square] 
+    @grid[cursor] = grid[selected_square]
     display.transport_piece
-    
+
     @grid[selected_square] = nil
   end
 

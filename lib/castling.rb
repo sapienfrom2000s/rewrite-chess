@@ -4,7 +4,7 @@ class Castling
   include Coordinates_Finder
 
   attr_reader :board
-  attr_accessor :king_side, :queen_side 
+  attr_accessor :king_side, :queen_side
 
   def initialize(board)
     @board = board
