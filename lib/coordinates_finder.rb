@@ -88,7 +88,7 @@ module Coordinates_Finder
     (piece.movement).each do |relative_move|
       coordinate_subset = []
       range.each do |multiplier|
-        new_coordinate = forge_coordinate(rel = amplified_movement(relative_move, multiplier))
+        new_coordinate = forge_coordinate(amplified_movement(relative_move, multiplier))
         break unless new_coordinate.first.between?(1,8) && new_coordinate.last.between?(1,8)
         coordinate_subset.push(new_coordinate)
       end
@@ -144,17 +144,9 @@ module Coordinates_Finder
   #this method is expensive and can be substituted
   def get_current_king_coordinate
     current_turn = board.turn
-    board.grid.reject do |coordinate, value|
+    board.grid.reject do |_,value|
       value.nil? || value.piece_id != :K || value.color != current_turn
     end.keys.flatten
   end
-
-  protected
-
-  def get_squares_occupied_by_current_turn
-    current_turn = board.turn
-    board.grid.reject do |coordinate, value|
-      value.nil? || value.color != current_turn
-    end.keys
-  end
 end
+
