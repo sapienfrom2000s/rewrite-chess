@@ -9,7 +9,7 @@ class Setup
 
   def deploy(piece, positions)
     positions.each do |coordinate|
-    board.grid[coordinate] = piece
+      board.grid[coordinate] = piece
     end
   end
 end

@@ -32,14 +32,14 @@ human2 = Human.new(board)
 board.display.render_board
 
 loop do
-    loop do
-        human1.move
-        board.display.render_board
-        break unless board.turn == :green
-    end
-    loop do
-        human2.move
-        board.display.render_board
-        break unless board.turn == :blue
-    end
+  loop do
+    human1.move
+    board.display.render_board
+    break unless board.turn == :green
+  end
+  loop do
+    human2.move
+    board.display.render_board
+    break unless board.turn == :blue
+  end
 end
