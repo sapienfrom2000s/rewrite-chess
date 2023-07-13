@@ -54,7 +54,7 @@ class Castling
     @queen_side[color] = false if rook_init_coordinates[:queen_side][color] == selected_square
   end
 
-  def no_pieces_between?(king, rook)
+  def no_pieces_between?(_king, rook)
     color = board.turn
     if rook == :king_rook
       king_rook_coordinate = rook_init_coordinates[:king_side][color]
@@ -76,7 +76,7 @@ class Castling
     flag
   end
 
-  def key_squares_between(king, rook)
+  def key_squares_between(_king, rook)
     key_squares = []
     if rook == :king_rook
       3.times do |file_adder|

@@ -12,12 +12,12 @@ class Display
   end
 
   def render_board
-  system("clear")
+    system("clear")
     restore_background
     emphasize_cursor
     8.downto(1).each do |rank|
       1.upto(8).each do |file|
-      print squares[[file,rank]]
+        print squares[[file,rank]]
       end
       print "\n"
     end
@@ -48,7 +48,7 @@ class Display
   def mount_pieces
     board.grid.each do |coordinate, value|
       unless value.nil?
-      squares[coordinate] = value.image.colorize(value.color).colorize(:background=>background_color(coordinate))
+        squares[coordinate] = value.image.colorize(value.color).colorize(:background=>background_color(coordinate))
       end
     end
   end
