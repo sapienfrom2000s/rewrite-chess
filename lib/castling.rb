@@ -90,3 +90,4 @@ class Castling
     key_squares
   end
 end
+
