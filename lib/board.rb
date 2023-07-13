@@ -1,25 +1,24 @@
-  require 'pieces/piece'
-  require 'display'
-  require 'coordinates_finder'
-  require 'castling'
-  require 'promotion'
+require 'pieces/piece'
+require 'display'
+require 'coordinates_finder'
+require 'castling'
+require 'promotion'
 
-  #add this comment to test patch
 class Board
 
   include Coordinates_Finder
 
   NO_OF_SQUARES = 64
-  INIT_ROOK_COORDINATES = [[1,1],[1,8],[8,1],[8,8]]
-  INIT_KING_COORDINATES = [[5,1],[5,8]]
+  INIT_ROOK_COORDINATES = [[1, 1], [1, 8], [8, 1], [8, 8]]
+  INIT_KING_COORDINATES = [[5, 1], [5, 8]]
   attr_accessor :grid
   attr_reader :cursor, :previous_cursor, :squares_to_highlight, :turn, :display, :selected_square, :castle, :promotion
 
   def initialize
     @grid = {}
     make_grid
-    @cursor = [1,1]
-    @previous_cursor = [1,1]
+    @cursor = [1, 1]
+    @previous_cursor = [1, 1]
     @squares_to_highlight = []
     @display = Display.new(self)
     @turn = :green
@@ -30,9 +29,9 @@ class Board
 
   def update_cursor(relative_move)
     updated_cursor = [cursor,relative_move].transpose.map(&:sum)
-    if updated_cursor.first.between?(1,8) &&\
-     updated_cursor.last.between?(1,8)
-     @cursor = updated_cursor
+    if updated_cursor.first.between?(1, 8) &&\
+     updated_cursor.last.between?(1, 8)
+      @cursor = updated_cursor
     end
   end
 
@@ -63,8 +62,8 @@ class Board
   def castle_kingside
     return unless castle.kingside_possible?
     king_init_coordinate = castle.king_init_coordinates[turn]
-    manual_piece_lift(king_init_coordinate.zip([2,0]).map(&:sum), king_init_coordinate)
-    manual_piece_lift(king_init_coordinate.zip([1,0]).map(&:sum), king_init_coordinate.zip([3,0]).map(&:sum))
+    manual_piece_lift(king_init_coordinate.zip([2, 0]).map(&:sum), king_init_coordinate)
+    manual_piece_lift(king_init_coordinate.zip([1, 0]).map(&:sum), king_init_coordinate.zip([3, 0]).map(&:sum))
     castle.break_both_side(turn)
     switch_turn
   end
@@ -72,8 +71,8 @@ class Board
   def castle_queenside
     return unless castle.queenside_possible?
     king_init_coordinate = castle.king_init_coordinates[turn]
-    manual_piece_lift(king_init_coordinate.zip([-2,0]).map(&:sum), king_init_coordinate)
-    manual_piece_lift(king_init_coordinate.zip([-1,0]).map(&:sum), king_init_coordinate.zip([-4,0]).map(&:sum))
+    manual_piece_lift(king_init_coordinate.zip([-2, 0]).map(&:sum), king_init_coordinate)
+    manual_piece_lift(king_init_coordinate.zip([-1, 0]).map(&:sum), king_init_coordinate.zip([-4, 0]).map(&:sum))
     castle.break_both_side(turn)
     switch_turn
   end
