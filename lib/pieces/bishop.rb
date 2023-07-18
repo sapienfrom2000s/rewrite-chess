@@ -6,7 +6,7 @@ class Bishop < Piece
   def initialize(color)
     super
     @piece_id = :B
-    @movement = [[1,1],[-1,1],[-1,-1],[1,-1]]
+    @movement = [[1, 1], [-1, 1], [-1, -1], [1, -1]]
     @image = '♝ '
   end
 end

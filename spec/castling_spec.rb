@@ -19,12 +19,12 @@ describe Board do
       king = King.new(:green)
       rook = Rook.new(:green)
 
-      setup.deploy(king, [[5,1]])
-      setup.deploy(rook, [[8,1]])
+      setup.deploy(king, [[5, 1]])
+      setup.deploy(rook, [[8, 1]])
 
       board.castle_kingside
-      expect( board.grid[[7,1]] ).to equal(king)
-      expect( board.grid[[6,1]] ).to equal(rook)
+      expect( board.grid[[7, 1]] ).to equal(king)
+      expect( board.grid[[6, 1]] ).to equal(rook)
 
     end
 
@@ -33,14 +33,14 @@ describe Board do
     rook = Rook.new(:green)
 
     queen = Queen.new(:green)
-    setup.deploy(king, [[5,1]])
-    setup.deploy(rook, [[8,1]])
-    setup.deploy(queen, [[6,1]])
+    setup.deploy(king, [[5, 1]])
+    setup.deploy(rook, [[8, 1]])
+    setup.deploy(queen, [[6, 1]])
 
     board.castle_kingside
 
-    expect( board.grid[[5,1]] ).to equal(king)
-    expect( board.grid[[8,1]] ).to equal(rook)
+    expect( board.grid[[5, 1]] ).to equal(king)
+    expect( board.grid[[8, 1]] ).to equal(rook)
    end
 
    it 'is unable to castle as opponent queen has checked the king' do
@@ -49,14 +49,14 @@ describe Board do
 
     opponent_queen = Queen.new(:blue)
 
-    setup.deploy(king, [[5,1]])
-    setup.deploy(rook, [[8,1]])
-    setup.deploy(opponent_queen, [[8,4]])
+    setup.deploy(king, [[5, 1]])
+    setup.deploy(rook, [[8, 1]])
+    setup.deploy(opponent_queen, [[8, 4]])
 
     board.castle_kingside
 
-    expect( board.grid[[5,1]] ).to equal(king)
-    expect( board.grid[[8,1]] ).to equal(rook)
+    expect( board.grid[[5, 1]] ).to equal(king)
+    expect( board.grid[[8, 1]] ).to equal(rook)
 
    end
 
@@ -66,14 +66,14 @@ describe Board do
 
     opponent_queen = Queen.new(:blue)
 
-    setup.deploy(king, [[5,1]])
-    setup.deploy(rook, [[8,1]])
-    setup.deploy(opponent_queen, [[7,8]])
+    setup.deploy(king, [[5, 1]])
+    setup.deploy(rook, [[8, 1]])
+    setup.deploy(opponent_queen, [[7, 8]])
 
     board.castle_kingside
 
-    expect( board.grid[[5,1]] ).to equal(king)
-    expect( board.grid[[8,1]] ).to equal(rook)
+    expect( board.grid[[5, 1]] ).to equal(king)
+    expect( board.grid[[8, 1]] ).to equal(rook)
 
    end
 
@@ -83,14 +83,14 @@ describe Board do
 
     opponent_pawn = Pawn.new(:blue)
 
-    setup.deploy(king, [[5,1]])
-    setup.deploy(rook, [[8,1]])
-    setup.deploy(opponent_pawn, [[7,2]])
+    setup.deploy(king, [[5, 1]])
+    setup.deploy(rook, [[8, 1]])
+    setup.deploy(opponent_pawn, [[7, 2]])
 
     board.castle_kingside
 
-    expect( board.grid[[5,1]] ).to equal(king)
-    expect( board.grid[[8,1]] ).to equal(rook)
+    expect( board.grid[[5, 1]] ).to equal(king)
+    expect( board.grid[[8, 1]] ).to equal(rook)
 
    end
 
@@ -98,14 +98,14 @@ describe Board do
     king = King.new(:green)
     rook = Rook.new(:green)
 
-    setup.deploy(king, [[5,1]])
-    setup.deploy(rook, [[8,1]])
-    board.castle.break([5,1])
+    setup.deploy(king, [[5, 1]])
+    setup.deploy(rook, [[8, 1]])
+    board.castle.break([5, 1])
 
     board.castle_kingside
 
-    expect( board.grid[[5,1]] ).to equal(king)
-    expect( board.grid[[8,1]] ).to equal(rook)
+    expect( board.grid[[5, 1]] ).to equal(king)
+    expect( board.grid[[8, 1]] ).to equal(rook)
 
    end
 
@@ -113,14 +113,14 @@ describe Board do
     king = King.new(:green)
     rook = Rook.new(:green)
 
-    setup.deploy(king, [[5,1]])
-    setup.deploy(rook, [[8,1]])
-    board.castle.break([8,1])
+    setup.deploy(king, [[5, 1]])
+    setup.deploy(rook, [[8, 1]])
+    board.castle.break([8, 1])
 
     board.castle_kingside
 
-    expect( board.grid[[5,1]] ).to equal(king)
-    expect( board.grid[[8,1]] ).to equal(rook)
+    expect( board.grid[[5, 1]] ).to equal(king)
+    expect( board.grid[[8, 1]] ).to equal(rook)
 
    end
   end
@@ -135,13 +135,13 @@ describe Board do
       king = King.new(:green)
       rook = Rook.new(:green)
 
-      setup.deploy(king, [[5,1]])
-      setup.deploy(rook, [[1,1]])
+      setup.deploy(king, [[5, 1]])
+      setup.deploy(rook, [[1, 1]])
 
       board.castle_queenside
 
-      expect( board.grid[[3,1]] ).to equal(king)
-      expect( board.grid[[4,1]] ).to equal(rook)
+      expect( board.grid[[3, 1]] ).to equal(king)
+      expect( board.grid[[4, 1]] ).to equal(rook)
 
     end
 
@@ -150,14 +150,14 @@ describe Board do
     rook = Rook.new(:green)
 
     queen = Queen.new(:green)
-    setup.deploy(king, [[5,1]])
-    setup.deploy(rook, [[1,1]])
-    setup.deploy(queen, [[2,1]])
+    setup.deploy(king, [[5, 1]])
+    setup.deploy(rook, [[1, 1]])
+    setup.deploy(queen, [[2, 1]])
 
     board.castle_queenside
 
-    expect( board.grid[[5,1]] ).to equal(king)
-    expect( board.grid[[1,1]] ).to equal(rook)
+    expect( board.grid[[5, 1]] ).to equal(king)
+    expect( board.grid[[1, 1]] ).to equal(rook)
    end
 
    it 'is unable to castle as opponent queen has checked the king' do
@@ -166,14 +166,14 @@ describe Board do
 
     opponent_queen = Queen.new(:blue)
 
-    setup.deploy(king, [[5,1]])
-    setup.deploy(rook, [[1,1]])
-    setup.deploy(opponent_queen, [[5,4]])
+    setup.deploy(king, [[5, 1]])
+    setup.deploy(rook, [[1, 1]])
+    setup.deploy(opponent_queen, [[5, 4]])
 
     board.castle_queenside
 
-    expect( board.grid[[5,1]] ).to equal(king)
-    expect( board.grid[[1,1]] ).to equal(rook)
+    expect( board.grid[[5, 1]] ).to equal(king)
+    expect( board.grid[[1, 1]] ).to equal(rook)
 
    end
 
@@ -183,14 +183,14 @@ describe Board do
 
     opponent_queen = Queen.new(:blue)
 
-    setup.deploy(king, [[5,1]])
-    setup.deploy(rook, [[1,1]])
-    setup.deploy(opponent_queen, [[2,5]])
+    setup.deploy(king, [[5, 1]])
+    setup.deploy(rook, [[1, 1]])
+    setup.deploy(opponent_queen, [[2, 5]])
 
     board.castle_queenside
 
-    expect( board.grid[[3,1]] ).to equal(king)
-    expect( board.grid[[4,1]] ).to equal(rook)
+    expect( board.grid[[3, 1]] ).to equal(king)
+    expect( board.grid[[4, 1]] ).to equal(rook)
    end
 
    it 'is unable to castle as opponent queen xrays between king and queen' do
@@ -199,14 +199,14 @@ describe Board do
 
     opponent_queen = Queen.new(:blue)
 
-    setup.deploy(king, [[5,1]])
-    setup.deploy(rook, [[1,1]])
-    setup.deploy(opponent_queen, [[3,8]])
+    setup.deploy(king, [[5, 1]])
+    setup.deploy(rook, [[1, 1]])
+    setup.deploy(opponent_queen, [[3, 8]])
 
     board.castle_queenside
 
-    expect( board.grid[[5,1]] ).to equal(king)
-    expect( board.grid[[1,1]] ).to equal(rook)
+    expect( board.grid[[5, 1]] ).to equal(king)
+    expect( board.grid[[1, 1]] ).to equal(rook)
 
    end
 
@@ -216,14 +216,14 @@ describe Board do
 
     opponent_pawn = Pawn.new(:blue)
 
-    setup.deploy(king, [[5,1]])
-    setup.deploy(rook, [[1,1]])
-    setup.deploy(opponent_pawn, [[4,2]])
+    setup.deploy(king, [[5, 1]])
+    setup.deploy(rook, [[1, 1]])
+    setup.deploy(opponent_pawn, [[4, 2]])
 
     board.castle_queenside
 
-    expect( board.grid[[5,1]] ).to equal(king)
-    expect( board.grid[[1,1]] ).to equal(rook)
+    expect( board.grid[[5, 1]] ).to equal(king)
+    expect( board.grid[[1, 1]] ).to equal(rook)
 
    end
 
@@ -231,15 +231,15 @@ describe Board do
     king = King.new(:green)
     rook = Rook.new(:green)
 
-    setup.deploy(king, [[5,1]])
-    setup.deploy(rook, [[1,1]])
+    setup.deploy(king, [[5, 1]])
+    setup.deploy(rook, [[1, 1]])
 
-    board.castle.break([5,1])
+    board.castle.break([5, 1])
 
     board.castle_queenside
 
-    expect( board.grid[[5,1]] ).to equal(king)
-    expect( board.grid[[1,1]] ).to equal(rook)
+    expect( board.grid[[5, 1]] ).to equal(king)
+    expect( board.grid[[1, 1]] ).to equal(rook)
 
    end
 
@@ -247,14 +247,14 @@ describe Board do
     king = King.new(:green)
     rook = Rook.new(:green)
 
-    setup.deploy(king, [[5,1]])
-    setup.deploy(rook, [[1,1]])
-    board.castle.break([1,1])
+    setup.deploy(king, [[5, 1]])
+    setup.deploy(rook, [[1, 1]])
+    board.castle.break([1, 1])
 
     board.castle_queenside
 
-    expect( board.grid[[5,1]] ).to equal(king)
-    expect( board.grid[[1,1]] ).to equal(rook)
+    expect( board.grid[[5, 1]] ).to equal(king)
+    expect( board.grid[[1, 1]] ).to equal(rook)
 
    end
   end
