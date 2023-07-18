@@ -55,20 +55,20 @@ module Coordinates_Finder
     color = board.grid[from].color
     param = color_based_variables(color)
     if rank == param[:starting_rank]
-      filter_samefile_and_nil_coords(get_potential_coordinates_of_piece_wrt_range(amplified_movement([1,2],param[:flipper])))
+      filter_samefile_and_nil_coords(get_potential_coordinates_of_piece_wrt_range(amplified_movement([1, 2], param[:flipper])))
     else
-      filter_samefile_and_nil_coords(get_potential_coordinates_of_piece_wrt_range(amplified_movement([1],param[:flipper])))
+      filter_samefile_and_nil_coords(get_potential_coordinates_of_piece_wrt_range(amplified_movement([1], param[:flipper])))
     end
   end
 
   def color_based_variables(color)
-    color == :green ? {:starting_rank=>2,:flipper=>1} : {:starting_rank=>7,:flipper=>-1}
+    color == :green ? {:starting_rank=>2, :flipper=>1} : {:starting_rank=>7, :flipper=>-1}
   end
 
   def get_potential_pawn_captures
     color = board.grid[from].color
     param = color_based_variables(color)
-    filter_difffile_and_nonnil_coords(get_potential_coordinates_of_piece_wrt_range(amplified_movement([1],param[:flipper])))
+    filter_difffile_and_nonnil_coords(get_potential_coordinates_of_piece_wrt_range(amplified_movement([1], param[:flipper])))
   end
 
   def filter_difffile_and_nonnil_coords(coordinates)
@@ -89,7 +89,7 @@ module Coordinates_Finder
       coordinate_subset = []
       range.each do |multiplier|
         new_coordinate = forge_coordinate(amplified_movement(relative_move, multiplier))
-        break unless new_coordinate.first.between?(1,8) && new_coordinate.last.between?(1,8)
+        break unless new_coordinate.first.between?(1, 8) && new_coordinate.last.between?(1, 8)
         coordinate_subset.push(new_coordinate)
       end
       coordinates.push(coordinate_subset)
@@ -102,7 +102,7 @@ module Coordinates_Finder
   end
 
   def forge_coordinate(relative_move)
-    [from,relative_move].transpose.map(&:sum)
+    [from, relative_move].transpose.map(&:sum)
   end
 
   #this method is expensive and can be substituted
@@ -144,7 +144,7 @@ module Coordinates_Finder
   #this method is expensive and can be substituted
   def get_current_king_coordinate
     current_turn = board.turn
-    board.grid.reject do |_,value|
+    board.grid.reject do |_, value|
       value.nil? || value.piece_id != :K || value.color != current_turn
     end.keys.flatten
   end

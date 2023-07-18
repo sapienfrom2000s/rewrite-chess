@@ -27,11 +27,11 @@ class Castling
   end
 
   def rook_init_coordinates
-    {:king_side => {:green => [8,1], :blue => [8,8]}, :queen_side => { :green => [1,1], :blue => [1,8]}}
+    {:king_side => {:green => [8, 1], :blue => [8, 8]}, :queen_side => { :green => [1, 1], :blue => [1, 8]}}
   end
 
   def king_init_coordinates
-    {:green => [5,1], :blue => [5,8]}
+    {:green => [5, 1], :blue => [5, 8]}
   end
 
   def kingside_available?
@@ -58,10 +58,10 @@ class Castling
     color = board.turn
     if rook == :king_rook
       king_rook_coordinate = rook_init_coordinates[:king_side][color]
-      board.grid[king_rook_coordinate.zip([-2,0]).map(&:sum)].nil? && potential_coordinates(king_rook_coordinate).include?(king_rook_coordinate.zip([-2,0]).map(&:sum))
+      board.grid[king_rook_coordinate.zip([-2, 0]).map(&:sum)].nil? && potential_coordinates(king_rook_coordinate).include?(king_rook_coordinate.zip([-2, 0]).map(&:sum))
     else
       queen_rook_coordinate = rook_init_coordinates[:queen_side][color]
-      board.grid[queen_rook_coordinate.zip([3,0]).map(&:sum)].nil? && potential_coordinates(queen_rook_coordinate).include?(queen_rook_coordinate.zip([3,0]).map(&:sum))
+      board.grid[queen_rook_coordinate.zip([3, 0]).map(&:sum)].nil? && potential_coordinates(queen_rook_coordinate).include?(queen_rook_coordinate.zip([3, 0]).map(&:sum))
     end
   end
 
@@ -80,11 +80,11 @@ class Castling
     key_squares = []
     if rook == :king_rook
       3.times do |file_adder|
-        key_squares <<  king_init_coordinates[board.turn].zip([file_adder,0]).map(&:sum)
+        key_squares <<  king_init_coordinates[board.turn].zip([file_adder, 0]).map(&:sum)
       end
     else
       3.times do |file_adder|
-        key_squares <<  king_init_coordinates[board.turn].zip([file_adder*(-1),0]).map(&:sum)
+        key_squares <<  king_init_coordinates[board.turn].zip([file_adder*(-1), 0]).map(&:sum)
       end
     end
     key_squares

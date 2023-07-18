@@ -28,7 +28,7 @@ class Board
   end
 
   def update_cursor(relative_move)
-    updated_cursor = [cursor,relative_move].transpose.map(&:sum)
+    updated_cursor = [cursor, relative_move].transpose.map(&:sum)
     if updated_cursor.first.between?(1, 8) &&\
      updated_cursor.last.between?(1, 8)
       @cursor = updated_cursor

@@ -17,7 +17,7 @@ class Display
     emphasize_cursor
     8.downto(1).each do |rank|
       1.upto(8).each do |file|
-        print squares[[file,rank]]
+        print squares[[file, rank]]
       end
       print "\n"
     end
@@ -27,13 +27,13 @@ class Display
 
   def decolorize_hints
     board.squares_to_highlight.each do |coordinate|
-      squares[coordinate] = fill_background(squares[coordinate],background_color(coordinate))
+      squares[coordinate] = fill_background(squares[coordinate], background_color(coordinate))
     end
   end
 
   def colorize_hints
     board.squares_to_highlight.each do |coordinate|
-      squares[coordinate] = fill_background(squares[coordinate],:magenta)
+      squares[coordinate] = fill_background(squares[coordinate], :magenta)
     end
   end
 
@@ -57,7 +57,7 @@ class Display
 
   def make_squares
     board.grid.keys.each do |coordinate|
-      squares[coordinate] = fill_background('  ',background_color(coordinate))
+      squares[coordinate] = fill_background('  ', background_color(coordinate))
     end
   end
 
@@ -74,7 +74,7 @@ class Display
     squares[cursor] = fill_background(squares[cursor], :red)
   end
 
-  def fill_background(container,color)
+  def fill_background(container, color)
     container.colorize(:background=>color)
   end
 
