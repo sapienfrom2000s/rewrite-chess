@@ -79,7 +79,7 @@ describe Pawn do
   end
 end
 
-#captures in pawns
+# captures in pawns
 
 describe Pawn do
   let(:board) { Board.new }
@@ -223,7 +223,7 @@ describe Pawn do
   end
 end
 
-#captures in pawns
+# captures in pawns
 
 describe Pawn do
   let(:board) { Board.new }
