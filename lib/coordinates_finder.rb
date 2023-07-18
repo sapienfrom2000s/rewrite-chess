@@ -105,7 +105,7 @@ module Coordinates_Finder
     [from, relative_move].transpose.map(&:sum)
   end
 
-  #this method is expensive and can be substituted
+  # this method is expensive and can be substituted
   def get_squares_occupied_by_current_turn
     current_turn = board.turn
     board.grid.reject do |coordinate, value|
@@ -141,7 +141,7 @@ module Coordinates_Finder
     board.grid[highlighted_square] = @piece_backup
   end
 
-  #this method is expensive and can be substituted
+  # this method is expensive and can be substituted
   def get_current_king_coordinate
     current_turn = board.turn
     board.grid.reject do |_, value|
