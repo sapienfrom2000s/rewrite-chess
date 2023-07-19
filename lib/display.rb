@@ -79,11 +79,15 @@ class Display
   end
 
   def background_color(coordinate)
-    if (coordinate.first + coordinate.last).even?
-      :yellow
-    else
-      :cyan
-    end
+    yellow?(coordinate) or cyan
+  end
+
+  def yellow?(coordinates)
+    :yellow if coordinates.sum.even?
+  end
+
+  def cyan
+    :cyan
   end
 
 end
