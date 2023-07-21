@@ -47,7 +47,7 @@ class Display
 
   def mount_pieces
     board.grid.each do |coordinate, value|
-      unless value.nil?
+     if value 
         squares[coordinate] = value.image.colorize(value.color).colorize(:background=>background_color(coordinate))
       end
     end
