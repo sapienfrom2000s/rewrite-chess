@@ -7,7 +7,8 @@ class Knight < Piece
   def initialize(color)
     super
     @piece_id = :N
-    @movement = [[-1, 2], [1, 2], [2, 1], [2, -1], [1, -2], [-1, -2], [-2, -1], [-2, 1]]
+    @movement = [[-1, 2], [1, 2], [2, 1], [2, -1],
+                [1, -2], [-1, -2], [-2, -1], [-2, 1]]
     @image = '♞ '
   end
 end

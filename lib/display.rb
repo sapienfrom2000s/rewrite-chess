@@ -27,13 +27,15 @@ class Display
 
   def decolorize_hints
     board.squares_to_highlight.each do |coordinate|
-      squares[coordinate] = fill_background(squares[coordinate], background_color(coordinate))
+      squares[coordinate] = fill_background(squares[coordinate],
+      background_color(coordinate))
     end
   end
 
   def colorize_hints
     board.squares_to_highlight.each do |coordinate|
-      squares[coordinate] = fill_background(squares[coordinate], :magenta)
+      squares[coordinate] = fill_background(squares[coordinate],
+                                            :magenta)
     end
   end
 
@@ -41,14 +43,17 @@ class Display
     piece = board.grid[board.selected_square]
     current_cursor = board.cursor
     selected_square = board.selected_square
-    squares[current_cursor] = piece.image.colorize(piece.color).colorize(:background=>background_color(current_cursor))
-    squares[selected_square] = fill_background('  ', background_color(selected_square))
+    squares[current_cursor] = piece.image.colorize(piece.color).
+      colorize(:background=>background_color(current_cursor))
+    squares[selected_square] = fill_background('  ',
+    background_color(selected_square))
   end
 
   def mount_pieces
     board.grid.each do |coordinate, value|
      if value 
-        squares[coordinate] = value.image.colorize(value.color).colorize(:background=>background_color(coordinate))
+        squares[coordinate] = value.image.colorize(value.color).
+          colorize(:background=>background_color(coordinate))
       end
     end
   end
@@ -57,15 +62,16 @@ class Display
 
   def make_squares
     board.grid.keys.each do |coordinate|
-      squares[coordinate] = fill_background('  ', background_color(coordinate))
+      squares[coordinate] = fill_background('  ',
+      background_color(coordinate))
     end
   end
 
   def restore_background
     previous_cursor = board.previous_cursor
-    squares[previous_cursor] = fill_background(squares[previous_cursor],\
+    squares[previous_cursor] = fill_background(squares[previous_cursor],
     background_color(previous_cursor))
-    squares[previous_cursor] = fill_background(squares[previous_cursor],\
+    squares[previous_cursor] = fill_background(squares[previous_cursor],
     :magenta) if board.squares_to_highlight.include?(previous_cursor)
   end
 
@@ -85,5 +91,4 @@ class Display
       :cyan
     end
   end
-
 end

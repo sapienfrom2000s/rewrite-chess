@@ -7,7 +7,8 @@ class Queen < Piece
   def initialize(color)
     super
     @piece_id = :Q
-    @movement = [[1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1], [0, 1]]
+    @movement = [[1, 1], [1, 0], [1, -1],
+               [0, -1], [-1, -1], [-1, 0], [-1, 1], [0, 1]]
     @image = '♛ '
   end
 end

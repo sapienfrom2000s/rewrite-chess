@@ -12,7 +12,8 @@ class Board
   INIT_ROOK_COORDINATES = [[1, 1], [1, 8], [8, 1], [8, 8]]
   INIT_KING_COORDINATES = [[5, 1], [5, 8]]
   attr_accessor :grid
-  attr_reader :cursor, :previous_cursor, :squares_to_highlight, :turn, :display, :selected_square, :castle, :promotion
+  attr_reader :cursor, :previous_cursor, :squares_to_highlight,
+    :turn, :display, :selected_square, :castle, :promotion
 
   def initialize
     @grid = {}
@@ -21,7 +22,7 @@ class Board
     @previous_cursor = [1, 1]
     @squares_to_highlight = []
     @display = Display.new(self)
-    @turn = :green
+    @turn = :white
     @castle = Castling.new(self)
     @promotion = Promotion.new(self)
     @board = self
@@ -29,7 +30,7 @@ class Board
 
   def update_cursor(relative_move)
     updated_cursor = [cursor, relative_move].transpose.map(&:sum)
-    if updated_cursor.first.between?(1, 8) &&\
+    if updated_cursor.first.between?(1, 8) &&
      updated_cursor.last.between?(1, 8)
       @cursor = updated_cursor
     end
@@ -48,7 +49,8 @@ class Board
   def transport_piece
     if squares_to_highlight.include?(cursor)
       castle.break(selected_square) if rook_or_king_is_being_moved?
-      promotion.mutate_pawn(selected_square) if grid[selected_square].piece_id == :P && (cursor.last == 1 || cursor.last == 8)
+      promotion.mutate_pawn(selected_square) if grid[selected_square]
+      .piece_id == :P && (cursor.last == 1 || cursor.last == 8)
 
       @grid[cursor] = grid[selected_square]
       display.transport_piece
@@ -62,8 +64,10 @@ class Board
   def castle_kingside
     return unless castle.kingside_possible?
     king_init_coordinate = castle.king_init_coordinates[turn]
-    manual_piece_lift(king_init_coordinate.zip([2, 0]).map(&:sum), king_init_coordinate)
-    manual_piece_lift(king_init_coordinate.zip([1, 0]).map(&:sum), king_init_coordinate.zip([3, 0]).map(&:sum))
+    manual_piece_lift(king_init_coordinate.zip([2, 0])
+    .map(&:sum), king_init_coordinate)
+    manual_piece_lift(king_init_coordinate.zip([1, 0])
+    .map(&:sum), king_init_coordinate.zip([3, 0]).map(&:sum))
     castle.break_both_side(turn)
     switch_turn
   end
@@ -71,8 +75,10 @@ class Board
   def castle_queenside
     return unless castle.queenside_possible?
     king_init_coordinate = castle.king_init_coordinates[turn]
-    manual_piece_lift(king_init_coordinate.zip([-2, 0]).map(&:sum), king_init_coordinate)
-    manual_piece_lift(king_init_coordinate.zip([-1, 0]).map(&:sum), king_init_coordinate.zip([-4, 0]).map(&:sum))
+    manual_piece_lift(king_init_coordinate.zip([-2, 0]).map(&:sum),
+    king_init_coordinate)
+    manual_piece_lift(king_init_coordinate.zip([-1, 0]).map(&:sum),
+    king_init_coordinate.zip([-4, 0]).map(&:sum))
     castle.break_both_side(turn)
     switch_turn
   end
@@ -90,7 +96,7 @@ class Board
   end
 
   def switch_turn
-    @turn = turn == :green ? :blue : :green
+    @turn = turn == :white ? :black : :white
   end
 
   private
@@ -117,6 +123,7 @@ class Board
 
   def rook_or_king_is_being_moved?
     piece_id = self.grid[selected_square].piece_id
-    (piece_id == :R || piece_id == :K) && (INIT_KING_COORDINATES + INIT_ROOK_COORDINATES).include?(selected_square)
+    (piece_id == :R || piece_id == :K) && (INIT_KING_COORDINATES +
+    INIT_ROOK_COORDINATES).include?(selected_square)
   end
 end

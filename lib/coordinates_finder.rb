@@ -55,25 +55,33 @@ module Coordinates_Finder
     color = board.grid[from].color
     param = color_based_variables(color)
     if rank == param[:starting_rank]
-      filter_samefile_and_nil_coords(get_potential_coordinates_of_piece_wrt_range(amplified_movement([1, 2], param[:flipper])))
+      filter_samefile_and_nil_coords(
+      get_potential_coordinates_of_piece_wrt_range(
+        amplified_movement([1, 2], param[:flipper])))
     else
-      filter_samefile_and_nil_coords(get_potential_coordinates_of_piece_wrt_range(amplified_movement([1], param[:flipper])))
+      filter_samefile_and_nil_coords(
+      get_potential_coordinates_of_piece_wrt_range(
+       amplified_movement([1], param[:flipper])))
     end
   end
 
   def color_based_variables(color)
-    color == :green ? {:starting_rank=>2, :flipper=>1} : {:starting_rank=>7, :flipper=>-1}
+    color == :white ? {:starting_rank=>2, :flipper=>1} :
+      {:starting_rank=>7, :flipper=>-1}
   end
 
   def get_potential_pawn_captures
     color = board.grid[from].color
     param = color_based_variables(color)
-    filter_difffile_and_nonnil_coords(get_potential_coordinates_of_piece_wrt_range(amplified_movement([1], param[:flipper])))
+    filter_difffile_and_nonnil_coords(
+      get_potential_coordinates_of_piece_wrt_range(
+        amplified_movement([1], param[:flipper])))
   end
 
   def filter_difffile_and_nonnil_coords(coordinates)
     coordinates.filter do |coordinate|
-      board.grid[coordinate].nil? == false && coordinate.first != from.first
+      board.grid[coordinate].nil? == false &&
+        coordinate.first != from.first
     end
   end
 
@@ -88,8 +96,10 @@ module Coordinates_Finder
     (piece.movement).each do |relative_move|
       coordinate_subset = []
       range.each do |multiplier|
-        new_coordinate = forge_coordinate(amplified_movement(relative_move, multiplier))
-        break unless new_coordinate.first.between?(1, 8) && new_coordinate.last.between?(1, 8)
+        new_coordinate = forge_coordinate(amplified_movement(
+          relative_move, multiplier))
+        break unless new_coordinate.first.between?(1, 8) &&
+          new_coordinate.last.between?(1, 8)
         coordinate_subset.push(new_coordinate)
       end
       coordinates.push(coordinate_subset)

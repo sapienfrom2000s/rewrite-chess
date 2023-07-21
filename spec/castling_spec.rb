@@ -16,8 +16,8 @@ describe Board do
     it 'changes the position of king and rook since no opponent pieces X-rays
 	between king and rook and king is not in check' do
 
-       king = King.new(:green)
-       rook = Rook.new(:green)
+       king = King.new(:white)
+       rook = Rook.new(:white)
 
        setup.deploy(king, [[5, 1]])
        setup.deploy(rook, [[8, 1]])
@@ -29,10 +29,10 @@ describe Board do
      end
 
     it 'is unable to castle as a piece is present in between' do
-      king = King.new(:green)
-      rook = Rook.new(:green)
+      king = King.new(:white)
+      rook = Rook.new(:white)
 
-      queen = Queen.new(:green)
+      queen = Queen.new(:white)
       setup.deploy(king, [[5, 1]])
       setup.deploy(rook, [[8, 1]])
       setup.deploy(queen, [[6, 1]])
@@ -44,10 +44,10 @@ describe Board do
     end
 
     it 'is unable to castle as opponent queen has checked the king' do
-      king = King.new(:green)
-      rook = Rook.new(:green)
+      king = King.new(:white)
+      rook = Rook.new(:white)
 
-      opponent_queen = Queen.new(:blue)
+      opponent_queen = Queen.new(:black)
 
       setup.deploy(king, [[5, 1]])
       setup.deploy(rook, [[8, 1]])
@@ -61,10 +61,10 @@ describe Board do
     end
 
     it 'is unable to castle as opponent queen xrays between king and queen' do
-      king = King.new(:green)
-      rook = Rook.new(:green)
+      king = King.new(:white)
+      rook = Rook.new(:white)
 
-      opponent_queen = Queen.new(:blue)
+      opponent_queen = Queen.new(:black)
 
       setup.deploy(king, [[5, 1]])
       setup.deploy(rook, [[8, 1]])
@@ -78,10 +78,10 @@ describe Board do
     end
 
     it 'is unable to castle as opponent pawn xrays between king and queen' do
-      king = King.new(:green)
-      rook = Rook.new(:green)
+      king = King.new(:white)
+      rook = Rook.new(:white)
 
-      opponent_pawn = Pawn.new(:blue)
+      opponent_pawn = Pawn.new(:black)
 
       setup.deploy(king, [[5, 1]])
       setup.deploy(rook, [[8, 1]])
@@ -95,8 +95,8 @@ describe Board do
     end
 
     it 'is unable to castle as king has already moved' do
-      king = King.new(:green)
-      rook = Rook.new(:green)
+      king = King.new(:white)
+      rook = Rook.new(:white)
 
       setup.deploy(king, [[5, 1]])
       setup.deploy(rook, [[8, 1]])
@@ -110,8 +110,8 @@ describe Board do
     end
 
     it 'is unable to castle as king side rook has already moved' do
-      king = King.new(:green)
-      rook = Rook.new(:green)
+      king = King.new(:white)
+      rook = Rook.new(:white)
 
       setup.deploy(king, [[5, 1]])
       setup.deploy(rook, [[8, 1]])
@@ -132,8 +132,8 @@ describe Board do
     it 'changes the position of king and rook since no opponent pieces X-rays
 	between king and rook and king is not in check' do
 
-       king = King.new(:green)
-       rook = Rook.new(:green)
+       king = King.new(:white)
+       rook = Rook.new(:white)
 
        setup.deploy(king, [[5, 1]])
        setup.deploy(rook, [[1, 1]])
@@ -146,10 +146,10 @@ describe Board do
      end
 
     it 'is unable to castle as a piece is present in between' do
-      king = King.new(:green)
-      rook = Rook.new(:green)
+      king = King.new(:white)
+      rook = Rook.new(:white)
 
-      queen = Queen.new(:green)
+      queen = Queen.new(:white)
       setup.deploy(king, [[5, 1]])
       setup.deploy(rook, [[1, 1]])
       setup.deploy(queen, [[2, 1]])
@@ -161,10 +161,10 @@ describe Board do
     end
 
     it 'is unable to castle as opponent queen has checked the king' do
-      king = King.new(:green)
-      rook = Rook.new(:green)
+      king = King.new(:white)
+      rook = Rook.new(:white)
 
-      opponent_queen = Queen.new(:blue)
+      opponent_queen = Queen.new(:black)
 
       setup.deploy(king, [[5, 1]])
       setup.deploy(rook, [[1, 1]])
@@ -178,10 +178,10 @@ describe Board do
     end
 
     it 'is able to castle even if opponent queen xrays 2nd file' do
-      king = King.new(:green)
-      rook = Rook.new(:green)
+      king = King.new(:white)
+      rook = Rook.new(:white)
 
-      opponent_queen = Queen.new(:blue)
+      opponent_queen = Queen.new(:black)
 
       setup.deploy(king, [[5, 1]])
       setup.deploy(rook, [[1, 1]])
@@ -194,10 +194,10 @@ describe Board do
     end
 
     it 'is unable to castle as opponent queen xrays between king and queen' do
-      king = King.new(:green)
-      rook = Rook.new(:green)
+      king = King.new(:white)
+      rook = Rook.new(:white)
 
-      opponent_queen = Queen.new(:blue)
+      opponent_queen = Queen.new(:black)
 
       setup.deploy(king, [[5, 1]])
       setup.deploy(rook, [[1, 1]])
@@ -211,10 +211,10 @@ describe Board do
     end
 
     it 'is unable to castle as opponent pawn xrays between king and queen' do
-      king = King.new(:green)
-      rook = Rook.new(:green)
+      king = King.new(:white)
+      rook = Rook.new(:white)
 
-      opponent_pawn = Pawn.new(:blue)
+      opponent_pawn = Pawn.new(:black)
 
       setup.deploy(king, [[5, 1]])
       setup.deploy(rook, [[1, 1]])
@@ -228,8 +228,8 @@ describe Board do
     end
 
     it 'is unable to castle as king has already moved' do
-      king = King.new(:green)
-      rook = Rook.new(:green)
+      king = King.new(:white)
+      rook = Rook.new(:white)
 
       setup.deploy(king, [[5, 1]])
       setup.deploy(rook, [[1, 1]])
@@ -244,8 +244,8 @@ describe Board do
     end
 
     it 'is unable to castle as king side rook has already moved' do
-      king = King.new(:green)
-      rook = Rook.new(:green)
+      king = King.new(:white)
+      rook = Rook.new(:white)
 
       setup.deploy(king, [[5, 1]])
       setup.deploy(rook, [[1, 1]])

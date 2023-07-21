@@ -12,9 +12,9 @@ describe Board do
   let(:setup) { Setup.new(board) }
   context 'when blue bishop is on [4,4],green knight on [5,5] and green king on [7,7] and knight tries to move' do
     it 'returns no highlighted squares' do
-      bishop = Bishop.new(:blue)
-      knight = Knight.new(:green)
-      king = King.new(:green)
+      bishop = Bishop.new(:black)
+      knight = Knight.new(:white)
+      king = King.new(:white)
       setup.deploy(bishop, [[4, 4]])
       setup.deploy(knight, [[5, 5]])
       setup.deploy(king, [[7, 7]])
@@ -26,9 +26,9 @@ describe Board do
 
   context 'when blue bishop is on [7,2],green queen on [2, 7] and green king on [1, 8] and queen tries to move' do
     it 'returns array of squares it can go' do
-      bishop = Bishop.new(:blue)
-      queen = Queen.new(:green)
-      king = King.new(:green)
+      bishop = Bishop.new(:black)
+      queen = Queen.new(:white)
+      king = King.new(:white)
       setup.deploy(bishop, [[7, 2]])
       setup.deploy(queen, [[2, 7]])
       setup.deploy(king, [[1, 8]])
@@ -40,8 +40,8 @@ describe Board do
 
   context 'when blue bishop is on [7,2], green king on [1, 8] and king tries to move' do
     it 'returns array of squares it can go' do
-      bishop = Bishop.new(:blue)
-      king = King.new(:green)
+      bishop = Bishop.new(:black)
+      king = King.new(:white)
       setup.deploy(bishop, [[7, 2]])
       setup.deploy(king, [[1, 8]])
       board.potential_coordinates([1, 8])
@@ -52,9 +52,9 @@ describe Board do
 
   context 'when blue bishop is on [7,2], blue queen on [2,7] green king on [1, 8] and king tries to move' do
     it 'returns array of squares it can go' do
-      bishop = Bishop.new(:blue)
-      king = King.new(:green)
-      queen = Queen.new(:blue)
+      bishop = Bishop.new(:black)
+      king = King.new(:white)
+      queen = Queen.new(:black)
       setup.deploy(bishop, [[7, 2]])
       setup.deploy(king, [[1, 8]])
       setup.deploy(queen, [[2, 7]])
@@ -67,9 +67,9 @@ describe Board do
 
   context 'when blue bishop is on [8,3], blue queen on [5,1] green king on [4, 8] and king tries to move' do
     it 'returns array of squares it can go' do
-      bishop = Bishop.new(:blue)
-      king = King.new(:green)
-      queen = Queen.new(:blue)
+      bishop = Bishop.new(:black)
+      king = King.new(:white)
+      queen = Queen.new(:black)
       setup.deploy(bishop, [[8, 3]])
       setup.deploy(king, [[4, 8]])
       setup.deploy(queen, [[5, 1]])
@@ -81,10 +81,10 @@ describe Board do
 
   context 'when blue bishop is on [8,3], blue queen on [4,1] green king on [4, 8], green rook on [8,7] and king tries to move' do
     it 'returns array of squares it can go' do
-      bishop = Bishop.new(:blue)
-      king = King.new(:green)
-      rook = Rook.new(:green)
-      queen = Queen.new(:blue)
+      bishop = Bishop.new(:black)
+      king = King.new(:white)
+      rook = Rook.new(:white)
+      queen = Queen.new(:black)
       setup.deploy(bishop, [[8, 3]])
       setup.deploy(king, [[4, 8]])
       setup.deploy(queen, [[4, 1]])
@@ -97,10 +97,10 @@ describe Board do
 
   context 'when blue bishop is on [8, 3], blue queen on [4,1] green king on [4, 8], green rook on [8,1] and king tries to move' do
     it 'returns array of squares it can go' do
-      bishop = Bishop.new(:blue)
-      king = King.new(:green)
-      rook = Rook.new(:green)
-      queen = Queen.new(:blue)
+      bishop = Bishop.new(:black)
+      king = King.new(:white)
+      rook = Rook.new(:white)
+      queen = Queen.new(:black)
       setup.deploy(bishop, [[8, 3]])
       setup.deploy(king, [[4, 8]])
       setup.deploy(queen, [[4, 1]])
@@ -113,10 +113,10 @@ describe Board do
 
   context 'when blue bishop is on [8,3], blue queen on [5,1] green king on [5, 6], green rook on [8,1] and king tries to move' do
     it 'returns array of squares it can go' do
-      bishop = Bishop.new(:blue)
-      king = King.new(:green)
-      rook = Rook.new(:green)
-      queen = Queen.new(:blue)
+      bishop = Bishop.new(:black)
+      king = King.new(:white)
+      rook = Rook.new(:white)
+      queen = Queen.new(:black)
       setup.deploy(bishop, [[8, 3]])
       setup.deploy(king, [[5, 6]])
       setup.deploy(queen, [[5, 1]])
