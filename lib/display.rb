@@ -19,7 +19,7 @@ class Display
       1.upto(8).each do |file|
         print squares[[file, rank]]
       end
-      print "\n"
+      puts "\n"
     end
     print "\n\n\n\n"
     board.save_cursor
