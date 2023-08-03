@@ -8,20 +8,28 @@ class Human
     @board = board
   end
 
+  MOVES = {
+    'w' => ->(board) { board.update_cursor([ 0,  1]) },
+    'W' => ->(board) { board.update_cursor([ 0,  2]) },
+    's' => ->(board) { board.update_cursor([ 0, -1]) },
+    'S' => ->(board) { board.update_cursor([ 0, -2]) },
+    'a' => ->(board) { board.update_cursor([-1,  0]) },
+    'A' => ->(board) { board.update_cursor([-2,  0]) },
+    'd' => ->(board) { board.update_cursor([ 1,  0]) },
+    'D' => ->(board) { board.update_cursor([ 2,  0]) },
+    'k' => ->(board) { board.castle_kingside },
+    'q' => ->(board) { board.castle_queenside },
+    'e' => proc { exit }
+  }
+
   def move
-    keypress = STDIN.getch.downcase
+    keypress = STDIN.getch
     case keypress
-    when 'w'
-      board.update_cursor([0, 1])
-    when 's'
-      board.update_cursor([0, -1])
-    when 'a'
-      board.update_cursor([-1, 0])
-    when 'd'
-      board.update_cursor([1, 0])
+    when *MOVES.keys
+      MOVES[keypress][board]
     when "\r"
       current_piece = board.grid[board.cursor]
-      if( current_piece != nil && current_piece.color == board.turn )
+      if (current_piece && current_piece.color == board.turn )
         board.display.decolorize_hints
         board.select_square
         board.fill_hints
@@ -32,12 +40,6 @@ class Human
         board.reset_hints
         board.deselect_square
       end
-    when 'k'
-      board.castle_kingside
-    when 'q'
-      board.castle_queenside
-    when 'e'
-      exit
     end
   end
 end
