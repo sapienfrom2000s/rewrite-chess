@@ -10,3 +10,4 @@ gem 'rspec-mocks'
 gem "colorize"
 gem "tty-cursor"
 
+gem "simplecov", "~> 0.22.0"
